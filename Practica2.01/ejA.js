@@ -11,4 +11,4 @@ var altMarcos= 170;
 var imcMarcos= masMarcos/(altMarcos*altMarcos);
 
 //Salida por consola del mensaje comparando IMC
-console.log("¿Tiene Marcos un IMC mayor que Juan? "+imcMarcos>imcJuan);
+console.log("¿Tiene Marcos un IMC mayor que Juan? "+(imcMarcos>imcJuan));
