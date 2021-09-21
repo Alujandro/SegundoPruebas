@@ -1,11 +1,4 @@
 "use strict";
-//Función constructora del objeto Curso
-function Curso(nom, an, desc, alu){
-    this.nombre=nom,
-    this.anyo=an,
-    this.descripcion=desc,
-    this.alumnado=alu
-}
 
 //Función constructora del objeto Alumnado
 function Alumnado(id, nombre, apellidos, aficiones, notas){
@@ -54,7 +47,7 @@ function imprimirInforme(obj){
 
 //Cración del objeto Notas del alumnado
 var nota=new Notas(4,5,6);
-//Creación del objeto Curso como objeto
+//Creación del objeto Alumnado como objeto
 var objeto=new Alumnado("6182","Cristina", "Lama Llama", ["Esquiar","Natación","Pinturas rupestres","Tenis"],nota);
 //Llamada a la función mostrar para llamar al objeto
 imprimirInforme(objeto);
