@@ -17,7 +17,46 @@ function aMinas(sudo){
         for (var j=0;j<sudo[i].length;j++){ //For para recorrer las filas
             let total=0;
             if (sudo[i][j]==0){              //Comprobación valor distinto a mina
-                
+                if (typeof sudo[i-1]!='undefined'){ //Prevención de errores
+                    if (sudo[i-1][j]<0){
+                        total++;
+                    }
+                    if (typeof sudo[i-1][j-1]!='undefined'){    //Prevención de errores
+                        if (sudo[i-1][j-1]<0){
+                            total++;
+                        }
+                    }
+                    if (typeof sudo[i-1][j+1]!='undefined'){    //Prevención de errores
+                        if (sudo[i-1][j+1]<0){
+                            total++;
+                        }
+                    }
+                }
+                if (typeof sudo[i+1]!='undefined'){ //Prevención de errores
+                    if (sudo[i+1][j]<0){
+                        total++;
+                    }
+                    if (typeof sudo[i+1][j-1]!='undefined'){    //Prevención de errores
+                        if (sudo[i+1][j-1]<0){
+                            total++;
+                        }
+                    }
+                    if (typeof sudo[i+1][j+1]!='undefined'){    //Prevención de errores
+                        if (sudo[i+1][j+1]<0){
+                            total++;
+                        }
+                    }
+                }
+                if (typeof sudo[i][j-1]!='undefined'){      //Prevención de errores
+                    if (sudo[i][j-1]<0){
+                        total++;
+                    }
+                }
+                if (typeof sudo[i][j+1]!='undefined'){      //Prevención de errores
+                    if (sudo[i][j+1]<0){
+                        total++;
+                    }
+                }
             }
             sudo[i][j]+=total;
         }
