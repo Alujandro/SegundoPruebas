@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejercicio 04</title>
+  </head>
+  <body>
+    <p>
+      <input type="text" id="texto" />
+      <button onclick="aniadir()">Añadir fila</button>
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Contenido</th>
+          <th>Operación</th>
+        </tr>
+      </thead>
+      <tbody id="bodyTabla">
+        <tr>
+          <!-- Este código lo debe generar dinámicamente INICIO -->
+          <td id="fila1">Ejemplo de contenido</td>
+          <td><button onclick="toCani('fila1')">Caniar</button></td>
+          <!-- FIN del código generado dinámicamente -->
+        </tr>
+      </tbody>
+    </table>
+    <script src="4.js"></script>
+  </body>
+</html>
