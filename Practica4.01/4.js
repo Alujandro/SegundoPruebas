@@ -29,6 +29,6 @@ function aniadir(){
     var texto=document.getElementById('texto').value;
     var fila = document.createElement("tr");    //Creo el elemento a añadir
     var elementos=document.querySelectorAll("tr").length; //Guardo la longitud del array de elementos tr
-    fila.innerHTML=`<td id="fila${elementos}">${texto}</td><td><button id="boton${elementos}" onclick="toCani('fila${elementos}')">Caniar</button>`;//Se crea la fila entera
+    fila.innerHTML=`<td onmouseover="this.style.backgroundColor='#AABBFF'" onmouseout="this.style.backgroundColor=''" id="fila${elementos}">${texto}</td><td><button id="boton${elementos}" onclick="toCani('fila${elementos}')">Caniar</button>`;//Se crea la fila entera
     document.getElementById("bodyTabla").appendChild(fila); //Añadimos la fila al final de la tabla
 }
