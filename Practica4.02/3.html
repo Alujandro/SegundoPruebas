@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+      border: 1px black;
+      background-color: #AABBFF;
+      font-weight: bold;
+      float: left;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin: 10px;
+      }
+      button {
+          margin-top: 10px;
+          font-size: 20px;
+      }
+      </style>
+  </head>
+  <body>
+    <div ondblclick="dos(this)" onclick="uno(this)">
+        <p>Elemento 1</p>
+    </div>
+    <div onclick="uno(this)" ondblclick="dos(this)">
+        <p>Elemento 2</p>
+    </div>
+    <div onclick="uno(this)" ondblclick="dos(this)">
+        <p>Elemento 3</p>
+    </div>
+    <div onclick="uno(this)" ondblclick="dos(this)">
+        <p>Elemento 4</p>
+    </div>
+    <div onclick="uno(this)" ondblclick="dos(this)">
+        <p>Elemento 5</p>
+    </div>
+    <button type="button" onclick="reaparecer()">Reaparecer</button>
+    <script src="3.js"></script>
+  </body>
+</html>
