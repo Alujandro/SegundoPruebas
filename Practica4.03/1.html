@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="1.css">  
+  </head>
+  <body>
+    <div>
+      <table id="eleccion">
+        <tr>
+          <td onclick="color(this)">A</td>
+          <td onclick="color(this)">B</td>
+          <td onclick="color(this)">C</td>
+          <td onclick="color(this)">D</td>
+          <td onclick="color(this)">E</td>
+          <td onclick="color(this)">F</td>
+        </tr>
+        <tr>
+          <td id="salida" colspan="6">Color</td>
+        </tr>
+       </table>
+    </div>
+    <div>
+      <table id="lienzo" class="noSelect">
+
+      </table>
+    </div>
+    <button onclick="reinicio()">Reiniciar</button>
+    <script src="1.js"></script>
+  </body>
+</html>
