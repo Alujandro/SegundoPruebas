@@ -5,20 +5,52 @@
     user-select: none;          /* Likely future */ 
   }
 
-table, th, td{
+table, th, td{  /* Reglas para mostrar los márgenes de las celdas y dar tamaños a las tablas */ 
     margin: 10px;
     border: 1px solid black;
     min-width: 100px;
     min-height: 10px;
 }
 
-.pixel {
+.pixel {    /* Reglas para los "píxeles" de la tabla de dibujar */ 
     min-width: 10px;
     min-height: 10px;
     width: 10px;
     height: 10px;
 }
 
-#salida {
+#salida {   /* Reglas para la celda del mensaje de texto, no es necesario */ 
     column-span: all;
+}
+
+/* Todas las reglas de abajo son para las celdas en las que se hace clic para escoger el color, podría haberlo hecho de otra forma, pero me estaba quedando sin tiempo */ 
+.red {
+    background-color: red;
+    min-height: 20px;
+    height: 20px;
+}
+.green {
+    background-color: green;
+    min-height: 20px;
+    height: 20px;
+}
+.blue {
+    background-color: blue;
+    min-height: 20px;
+    height: 20px;
+}
+.yellow {
+    background-color: yellow;
+    min-height: 20px;
+    height: 20px;
+}
+.cyan {
+    background-color: cyan;
+    min-height: 20px;
+    height: 20px;
+}
+.white {
+    background-color: white;
+    min-height: 20px;
+    height: 20px;
 }
