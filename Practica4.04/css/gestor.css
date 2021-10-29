@@ -2,6 +2,10 @@
   margin: 1%;
 }
 
+#error {
+  color: red;
+}
+
 #contenedor > div {
   /* Selector hijos directos (primer nivel) */
   float: left;

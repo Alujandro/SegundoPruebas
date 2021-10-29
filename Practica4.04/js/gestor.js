@@ -4,11 +4,25 @@
 function aniadir(){
     var tarea=document.getElementById("tareas").firstChild.nextSibling.value;//Guarda el texto del textbox en una variable
     document.getElementById("tareas").firstChild.nextSibling.value="";//Vacía el textbox
-    if (tarea===""){    //Si el textbox extá vacío muestra un error
-        console.log("Vacío");
-    } else {    //Si no está vacío ejecuta la función más pendiente
+    if (tarea===""){    //Si el textbox está vacío muestra un error
+        if (document.getElementById("error")!=null){    //Comprobamos si existe el elemento error
+            document.getElementById("error").remove();  //Si existe lo borra para evitar que aparezca múltiples veces
+        }
+        mensaje();  //Muestra el mensaje
+    } else {    //Si no está vacío ejecuta la función masPendiente
+        if (document.getElementById("error")!=null){    //Si hay un elemento error lo borra
+            document.getElementById("error").remove();
+        }
         masPendiente(tarea);
     }
+}
+
+//Esta función genera un mensaje y lo muestra
+function mensaje(){
+    var mensaje = document.createElement("p");
+    mensaje.innerHTML ="Por favor, introduzca un texto antes de pusar añadir";
+    mensaje.id="error";
+    document.getElementById("tareas").appendChild(mensaje);
 }
 
 //Función para convertir un texto en una tarea completa dentro de pendientes
