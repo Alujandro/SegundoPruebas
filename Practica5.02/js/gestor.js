@@ -1,4 +1,5 @@
 "use strict";
+window.onload = function () {   //Necesario
 
 //Función para añadir el contenido del textbox a pendientes
 function aniadir(){
@@ -133,3 +134,5 @@ var elem2=document.getElementById("sho");   //Guardamos el elemento sho
 
 elem.onclick=function (){ aniadir() };  //Acción al pulsar el botón añadir
 elem2.onclick=function (){ mostrar() }; //Acción al pulsar el botón mostrar
+
+} //Fin del programa
