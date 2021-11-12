@@ -27,6 +27,8 @@ input[type=text], select, input[type=number] {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+    max-width: 50%;
+    margin: 0 auto;
   }
 
   /* Esto de aquí abajo no lo he robado de W3schools */
