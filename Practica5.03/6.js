@@ -6,21 +6,21 @@ window.onload = function () {   //Necesario
     //Función para cuando se pulsa el botón guardar
     function guardar(){
         
-        if (document.getElementById("disco").value==""){    //Si disco está vacío muestra un mensaje
+        if (testDisco()){    //Si disco está vacío muestra un mensaje
             document.getElementById("error").parentElement.style.display="inherit"; //Muestra el div error
-            document.getElementById("error").innerHTML="El campo disco no puede estar vacío";
+            document.getElementById("error").innerHTML="Disco está vacío o demasiado corto";
             return false;
-        } else if (document.getElementById("grupo").value==""){    //Si grupo está vacío muestra un error
+        } else if (testGrupo()){    //Si grupo está vacío muestra un error
             document.getElementById("error").parentElement.style.display="inherit"; //Muestra el div error
-            document.getElementById("error").innerHTML="El campo grupo no puede estar vacío";
+            document.getElementById("error").innerHTML="Grupo está vacío o es demasiado corto";
             return false;
-        } else if (document.getElementById("anyo").value==""){    //Si año está vacío informa sobre el fallo
+        } else if (testAnyo()){    //Si año está vacío informa sobre el fallo
             document.getElementById("error").parentElement.style.display="inherit"; //Muestra el div error
-            document.getElementById("error").innerHTML="Falta un valor numérico en año";
+            document.getElementById("error").innerHTML="Falta un valor numérico compatible en año";
             return false;
-        } else if (document.getElementById("local").value==""){    //Si localizacion está vacío nos lo dice
+        } else if (testLocal()){    //Si localizacion está vacío nos lo dice
             document.getElementById("error").parentElement.style.display="inherit"; //Muestra el div error
-            document.getElementById("error").innerHTML="Falta un valor numérico en localización";
+            document.getElementById("error").innerHTML="Formato de localización incompatible, tiene que ser tipo ES-001AA";
             return false;
         } else {
             document.getElementById("error").parentElement.style.display="none";    //Oculta el div error
@@ -35,6 +35,50 @@ window.onload = function () {   //Necesario
             vaciar();
             meter(intro);
         }
+    }
+
+    function testDisco(){
+        var exp=/.{5,}/;
+        var es=document.getElementById("disco");
+        if (es.value.search(exp)==-1){
+            es.setAttribute("class","mal");
+            return true;
+        }
+        es.setAttribute("class","bien");
+        return false;
+    }
+
+    function testGrupo(){
+        var exp=/.{5,}/;
+        var es=document.getElementById("grupo");
+        if (es.value.search(exp)==-1){
+            es.setAttribute("class","mal");
+            return true;
+        }
+        es.setAttribute("class","bien");
+        return false;
+    }
+
+    function testAnyo(){
+        var exp=/^\d{4}$/;
+        var es=document.getElementById("anyo");
+        if (es.value.search(exp)==-1){
+            es.setAttribute("class","mal");
+            return true;
+        }
+        es.setAttribute("class","bien");
+        return false;
+    }
+
+    function testLocal(){
+        var exp=/^ES\-\d{3}[A-Z]{2}$/;
+        var es=document.getElementById("local");
+        if (es.value.search(exp)==-1){
+            es.setAttribute("class","mal");
+            return true;
+        }
+        es.setAttribute("class","bien");
+        return false;
     }
     
     //Función para vaciar el form, antes era más compleja

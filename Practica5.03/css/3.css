@@ -1,4 +1,4 @@
-input[type=text], select, input[type=number] {
+input, select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -39,4 +39,8 @@ input[type=text], select, input[type=number] {
 
   #error {
       color: red;
+  }
+
+  .mal {
+    border: 1px solid #f00;
   }
