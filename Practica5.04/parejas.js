@@ -7,6 +7,7 @@ window.onload = function () {   //Necesario
     var imagenes=["1.jpg","1.jpg","2.jpg","2.jpg","3.jpg","3.jpg","4.jpg","4.jpg","5.jpg","5.jpg","6.jpg","6.jpg"];
     var imoriginal=null;
     var aciertos=0;
+    var intentos=0;
     var es=false;   //Esta variable me asegura que no hay una comprobación en progreso
     
     //Esta función no tiene que ser una función, pero así está bien
@@ -51,12 +52,14 @@ window.onload = function () {   //Necesario
             imagen=imagenes[ide];
         } else {    //Si hay elemento que comparar, lo comparamos
             if (imagen==imagenes[evento.target.id] && ide!=evento.target.id && !es){
+                intentos++;
                 aciertos++;
                 imagen=null;
                 if (aciertos==6){
                     console.log("BISTORIA");
                 }
             } else {
+                intentos++;
                 es=true;    //Esta es la base del funcionamiento de todo el programa
                 //Esto tendrá que ser una función de estas con atraso de 0.5 segundos para que se pueda ver la imagen antes de que se esconda
                 setTimeout(function() {
