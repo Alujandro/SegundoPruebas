@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        
+    </style>
+    <title>Inicio</title> 
+  </head>
+  <body>
+      <header>
+          <h1 id="#">Imagen</h1>
+        <!-- Menu de navegacion -->
+        <nav>
+          <div id="menu">
+              <table>
+                  <tr>
+                      <td><a href="index.html">Índice</a></td>
+                      <td><a href="blog.html">Blog</a></td>
+                      <td class="activo"><a href="#">Imagen</a></td>
+                      <td><a href="etiquetas.html">Etiquetas</a></td>
+                      <td><a href="formulario.html">Formulario</a></td>
+                  </tr>
+              </table>
+          </div>
+        </nav>
+      </header>
+    <main>
+        <picture>
+            <source media="(min-width: 650px)" src="imagen1.jpg">
+            <source media="(min-width: 450px)" src="imagen2.jpg">
+            <source src="imagen.jpg">
+            <img src="fallo.jpg" alt="Imagen en caso de que no se soporte la etiqueta.">
+            <p>Texto accesible en caso de que no se soporte la etiqueta.</p>
+        </picture>
+        <img
+ srcset="
+  flamingo4x.jpg 4x,
+  flamingo3x.jpg 3x,
+  flamingo2x.jpg 2x,
+  flamingo1x.jpg 1x
+ "
+ src="flamingo.jpg"
+        >
+        <p>Línea de texto 1</p> 
+        <p>Línea de texto 2</p> 
+        <p>Línea de texto 3</p> 
+        <p>Línea de texto 4</p> 
+        <p>Línea de texto 5</p> 
+        <audio src="audio.mp3" autoplay loop>
+            <p>Tu navegador no es compatible con este archivo.</p>
+        </audio>
+    </main>
+  </body>
+</html>

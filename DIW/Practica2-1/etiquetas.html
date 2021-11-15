@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        
+    </style>
+    <title>Inicio</title> 
+  </head>
+  <body>
+      <header>
+          <h1 id="#">Etiquetas</h1>
+        <!-- Menu de navegacion -->
+        <nav>
+          <div id="menu">
+              <table>
+                  <tr>
+                      <td><a href="index.html">Índice</a></td>
+                      <td><a href="blog.html">Blog</a></td>
+                      <td><a href="imagen.html">Imagen</a></td>
+                      <td class="activo"><a href="#">Etiquetas</a></td>
+                      <td><a href="formulario.html">Formulario</a></td>
+                  </tr>
+              </table>
+          </div>
+        </nav>
+      </header>
+    <main>
+        <p>Texto para probar diferentes etiquetas:</p>
+        <p><mark>Etiqueta mark</mark></p>
+        <p>
+            <details>
+                <summary>Texto de pulsar en details/summary</summary>
+                <p>Texto que se muestra/oculta</p>
+            </details>
+        </p>
+        <p><cite>Etiqueta cite</cite></p>
+        <p>
+            Datalist: 
+            <input list="mi-lista">
+            <datalist id="mi-lista">
+            <option value="Dato1">
+            <option value="Dato2">
+            <option value="Dato3">
+            </datalist>
+        </p>
+        <p>
+            Etiqueta meter a 50 sobre 100: 
+            <meter low="40" high="70" min="0" max="100" optimum="50" value="50">
+                Ejemplo de meter.
+                </meter>
+        </p>
+        <p>
+            Etiqueta progress a 60%: 
+            <progress min="0" max="100" value="60"></progress>
+        </p>
+    </main>
+    <footer>
+        <title>Footer</title>
+        <p>Contenido de la etiqueta footer</p>
+    </footer>
+  </body>
+</html>

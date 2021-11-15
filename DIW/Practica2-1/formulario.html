@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        
+    </style>
+    <title>Inicio</title> 
+  </head>
+  <body>
+      <header>
+          <h1 id="#">Etiquetas</h1>
+        <!-- Menu de navegacion -->
+        <nav>
+          <div id="menu">
+              <table>
+                  <tr>
+                      <td><a href="index.html">Índice</a></td>
+                      <td><a href="blog.html">Blog</a></td>
+                      <td><a href="imagen.html">Imagen</a></td>
+                      <td><a href="etiquetas.html">Etiquetas</a></td>
+                      <td class="activo"><a href="#">Formulario</a></td>
+                  </tr>
+              </table>
+          </div>
+        </nav>
+      </header>
+    <main>
+        <form id="app-login" action="process.php">
+            <fieldset>
+            <legend>Formulario</legend>
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input name="nombre" type="text" required autofocus>
+            </div>
+            <div>
+                <label for="email">Correo electrónico:</label>
+                <input name="email" type="email" required>
+            </div>
+            <div>
+                <label for="url">URL:</label>
+                <input name="url" type="url">
+            </div>
+            <div>
+                <label for="fecha">Fecha:</label>
+                <input name="fecha" type="date">
+            </div>
+            <div>
+                <label for="tiempo">Tiempo:</label>
+                <input name="tiempo" type="time">
+            </div>
+            <div>
+            <div>
+                <label for="fecha">Fecha y hora de nacimiento:</label>
+                <input name="fecha" type="text">
+            </div>
+            <div>
+                <label for="mes">Mes:</label>
+                <input name="mes" type="month">
+            </div>
+            <div>
+                <label for="semana">Semana:</label>
+                <input name="semana" type="week">
+            </div>
+            <div>
+                <label for="numero">Número:</label>
+                <input name="numero" type="number" min="-10" max="10">
+            </div>
+            <div>
+                <label for="intervalo">Intervalo:</label>
+                <input name="intervalo" type="range" min="0" max="10">
+            </div>
+            <div>
+                <label for="telefono">Telefono:</label>
+                <input name="telefono" type="tel">
+            </div>
+            <div>
+                <label for="busqueda">Término de búsqueda:</label>
+                <input name="busqueda" type="text">
+            </div>
+            <div>
+                <label for="color">Color:</label>
+                <input name="color" type="color">
+            </div>
+             <input name="login" type="submit" value="Login">
+            </div>
+            </fieldset>
+            </form>
+    </main>
+  </body>
+</html>
