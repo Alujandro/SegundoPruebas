@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        
+    </style>
+    <title>Inicio</title> 
+  </head>
+  <body>
+      <header>
+          <h1 id="#">Blog</h1>
+        <!-- Menu de navegacion -->
+        <nav>
+          <div id="menu">
+              <table>
+                  <tr>
+                      <td><a href="index.html">Índice</a></td>
+                  </tr>
+              </table>
+          </div>
+        </nav>
+      </header>
+    <main>
+        <article>
+            <h2>Vídeo</h2>
+            <video id="demo" width="320" height="240">
+                <source src="movie.mp4" type="video/mp4">
+                <source src="movie.ogg" type="video/ogg">
+                Tu buscador no es compatible con este formato.
+            </video>
+            <div>
+            <button onclick="document.getElementById('demo').play()">
+            Reproducir el Video
+            </button>
+            <button onclick="document.getElementById('demo').currentTime=0">
+            Reiniciar Video
+            </button>
+            <button onclick="document.getElementById('demo').currentTime+=5">
+            Adelantar Video
+            </button>
+            <button onclick="document.getElementById('demo').currentTime-=5">
+            Atrasar Video
+            </button>
+            <button onclick="document.getElementById('demo').pause()">
+            Pausar el Video
+            </button>
+            <button onclick="document.getElementById('demo').volume=0">
+            Silenciar
+            </button>
+            <button onclick="document.getElementById('demo').volume+=0.1">
+            Aumentar  Volumen
+            </button>
+            <button onclick="document.getElementById('demo').volume-=0.1">
+            Disminuir  Volumen
+            </button>
+            </div>
+        </article>
+        <article>
+            <h2>Segundo vídeo</h2>
+            <video id="demo" width="320" height="240">
+                <source src=video2.mp4#t=2,7 type="video/mp4">
+                <source src=video2.ogg#t=2,7 type="video/ogg">
+                Tu buscador no es compatible con este formato.
+            </video>
+        </article>
+    </main>
+    <script>
+    </script>
+  </body>
+</html>
