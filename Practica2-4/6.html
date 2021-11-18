@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="cosa.css" />
+        <title>Juego</title>
+      </head>
+<body>
+    <canvas id="lienzo" width="600" height="400"> 
+        Su navegador no soporta el elemento canvas
+    </canvas>
+    
+    <script>
+        var lienzo = null, canvas = null;
+        var x = 50, y = 50;
+        var lastPress = null;
+    
+        const KEY_RIGHT = 39;
+        const KEY_LEFT = 37;
+        const KEY_UP = 40;
+        const KEY_DOWN = 38;
+        const KEY_P = 80;
+    
+        function iniciar() {
+            canvas = document.getElementById('lienzo');
+            lienzo = canvas.getContext('2d');
+            run();
+        }
+    
+        function run() {
+                requestAnimationFrame(run);
+                pintarLienzo(lienzo);
+            accionesJuego();
+        }
+    
+        function accionesJuego() {   
+                if (lastPress == KEY_RIGHT) x += 5;
+                if (lastPress == KEY_LEFT) x -= 5;
+                if (lastPress == KEY_UP) y += 5;
+                if (lastPress == KEY_DOWN) y -= 5;
+                if (x >= canvas.width) x = 0;
+                if (x < 0) x = canvas.width;
+                if (y < 0) y = canvas.height;
+                if (y > canvas.height) y = 0;
+                if (lastPress == KEY_P){
+                    lienzo.font = "30px Arial";
+                    lienzo.fillText("Pausa", 10, 50);
+                } else {
+                    lienzo.font = "30px Arial";
+                    lienzo.fillText("", 0,0);
+                }
+        }
+    
+        function pintarLienzo(lienzo) {
+            lienzo.fillStyle = "#E5E4E2";
+            lienzo.fillRect(0, 0, canvas.width, canvas.height);
+            lienzo.fillStyle = '#FF0000';
+            lienzo.fillRect(x, y, 10, 10);
+        }
+    
+        window.addEventListener("load", iniciar, false);
+    
+        document.addEventListener('keydown', function(evt) {
+            lastPress = evt.keyCode;
+        }, false);
+    
+    </script>
+ 
+</body>
+</html>

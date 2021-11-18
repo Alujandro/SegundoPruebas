@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <canvas height="500" id="miCanvas" width="500">
+    Tu navegador no soporta la etiqueta canvas de HTML5.
+    </canvas>
+    <script type="text/javascript">
+    var c = document.getElementById("miCanvas");
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(40, 60, 30, 0.5 * Math.PI, 1 * Math.PI);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.arc(120, 60, 30, 0 * Math.PI, 1 * Math.PI);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.arc(40, 150, 30, 1 * Math.PI, 0.5 * Math.PI);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.arc(120, 150, 30, 1 * Math.PI, 0 * Math.PI);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    </script>
+
+    <canvas height="500" id="miCanvas" width="500">
+    Tu navegador no soporta la etiqueta canvas de HTML5.
+    </canvas>
+    <script type="text/javascript">
+    var c = document.getElementById("miCanvas");
+    var ctx = c.getContext("2d");
+    
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetY = 5;
+    ctx.shadowOffsetX = 5;
+    ctx.shadowColor = "yellow";
+    ctx.strokeStyle = '#000';
+    ctx.strokeRect(220, 20, 100, 100);
+    
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = "green";
+    ctx.strokeStyle = '#000';
+    ctx.strokeRect(235, 35, 100, 100);
+    
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = "blue";
+    ctx.strokeStyle = '#000';
+    ctx.strokeRect(250, 50, 100, 100);
+    
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = "red";
+    ctx.strokeStyle = '#000';
+    ctx.strokeRect(265, 65, 100, 100);
+    </script>
+ 
+</body>
+</html>
