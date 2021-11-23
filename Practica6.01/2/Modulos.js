@@ -5,7 +5,7 @@ export class Modulos{
         this.nombre=nombre;
         this.horas=nhoras;
         this.profesorado=new Array();
-        this.profesorado=profado;
+        this.profesores=profado;
     }
 
     //Getters
@@ -18,6 +18,9 @@ export class Modulos{
     getProfesorado(){
         return this.profesorado;
     }
+    getProfesores(){
+        return this.profesores;
+    }
 
     //Setters
     setNombre(no){
@@ -26,12 +29,19 @@ export class Modulos{
     setHoras(ho){
         this.horas=ho;
     }
+    setProfesores(pr){
+        this.profesores=pr;
+    }
 
     //Métodos de clase
-    addProfesorado(profesor){
+    masProfesor(profesor){
         if (profesor.prototype==Profesorado.prototype){
             let pro=new Profesorado(profesor.getNombre, profesor.getApellidos, profesor.getDni, profesor.getAsignatura);
             this.profesorado.push(pro);
         }
+    }
+    addProfesor(nombre,apellidos,dni,asignatura){
+        let profe=new Profesorado(nombre,apellidos,dni,asignatura);
+        this.masProfesor(profe);
     }
 }

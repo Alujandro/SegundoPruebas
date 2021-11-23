@@ -1,7 +1,7 @@
 "use strict";
 import { Alumnado } from "./Alumnado.js";
 import { Modulos } from "./Modulos.js";
-class Curso{
+export class Curso{
     constructor(nomb, numAula, numModul, numAlumno){
         this.nombre=nomb;
         this.aula=numAula;
@@ -55,16 +55,29 @@ class Curso{
     }
 
     //Métodos de clase
-    matricularAlumno(alum){
-        if (alum.prototype==Alumnado.prototype && this.alumnado.length<this.alumnos);{
-            let alu=new Alumnado(alum.getDni(),alum.getNombre(),alum.getApellido(),alum.getNacimiento(),alum.getNota());
-            this.alumnado.push(alu);
+    matricularAlumno(alum, nombre, ape, fnac, nomedia){
+        if (this.alumnado.length<this.alumnos){
+            if (alum.prototype==Alumnado.prototype){
+                let alu=new Alumnado(alum.getDni(),alum.getNombre(),alum.getApellido(),alum.getNacimiento(),alum.getNota());
+                this.alumnado.push(alu);
+            } else {
+                let alu=new Alumnado(alum, nombre, ape, fnac, nomedia);
+                this.alumnado.push(alu);
+            }
         }
     }
     agregarModulo(mod){
         if (mod.prototype==Modulos.prototype && this.modulos.length<this.modulo);{
             let mon=new Modulos(mod.getNombre(), mod.getHoras(), mod.getProfesorado());
             this.alumnado.push(mon);
+        }
+    }
+    mostrarCurso(){
+        return this.nombre+":"+this.aula+":"+this.modulo+":"+this.alumnos;
+    }
+    mostrarProfesorado(){
+        for (let i=0; i<this.modulos.length; i++){
+            
         }
     }
 }

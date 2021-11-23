@@ -61,4 +61,8 @@ export class Alumnado{
             return false;
         }
     }
+    toString(){
+
+        return this.getDni()+":"+this.getNombre()+":"+this.getApellido()+":"+this.getEdad()+":"+this.getNacimiento()+":"+this.getNota();
+    }
 }
