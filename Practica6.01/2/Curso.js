@@ -1,6 +1,8 @@
 "use strict";
 import { Alumnado } from "./Alumnado.js";
 import { Modulos } from "./Modulos.js";
+import { Profesorado } from "./Profesorado.js";
+import * as imprimir from "./Salida.js";
 export class Curso{
     constructor(nomb, numAula, numModul, numAlumno){
         this.nombre=nomb;
@@ -32,6 +34,9 @@ export class Curso{
     getModulo(){
         return this.modulo;
 
+    }
+    getModulos(){
+        return this.modulos;
     }
     getAlumnos(){
         return this.alumnos;
@@ -68,16 +73,36 @@ export class Curso{
     }
     agregarModulo(mod){
         if (mod.prototype==Modulos.prototype && this.modulos.length<this.modulo);{
-            let mon=new Modulos(mod.getNombre(), mod.getHoras(), mod.getProfesorado());
-            this.alumnado.push(mon);
+            let mon=new Modulos(mod.getNombre(), mod.getHoras(), mod.getProfesores(), mod.getProfesores());
+            mon.setProfesorado(mod.getProfesorado());
+            this.modulos.push(mon);
         }
     }
-    mostrarCurso(){
+    nuevoModulo(nom,hor,prof){
+        return new Modulos(nom,hor,prof);
+    }
+    nuevoProfesor(nom, ape, dni, asig){
+        return new Profesorado(nom, ape, dni, asig);
+    }
+    sacaCurso(){
         return this.nombre+":"+this.aula+":"+this.modulo+":"+this.alumnos;
     }
-    mostrarProfesorado(){
-        for (let i=0; i<this.modulos.length; i++){
-            
+    muestraCurso(){
+        imprimir.mostrar(this.sacaCurso(),1);
+    }
+    
+    sacaProfesorado(){
+        //let arr;
+        let profes=new Array();
+        for (let i=0; i<this.getModulo().length; i++){
+            for (let j=0; j<this.getModulos[i].getProfesorado().length; j++){
+                profes.push(this.getModulos()[i].getProfesorado()[j]);
+            }
         }
+        
+        return profes;
+    }
+    muestraProfesorado(){
+        imprimir.mostrar(this.sacaProfesorado(),2);
     }
 }

@@ -32,6 +32,9 @@ export class Modulos{
     setProfesores(pr){
         this.profesores=pr;
     }
+    setProfesorado(pr){
+        this.profesorado=pr;
+    }
 
     //Métodos de clase
     masProfesor(profesor){
