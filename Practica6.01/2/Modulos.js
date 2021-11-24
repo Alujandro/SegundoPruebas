@@ -38,13 +38,15 @@ export class Modulos{
 
     //Métodos de clase
     masProfesor(profesor){
-        if (profesor.prototype==Profesorado.prototype){
-            let pro=new Profesorado(profesor.getNombre, profesor.getApellidos, profesor.getDni, profesor.getAsignatura);
-            this.profesorado.push(pro);
-        }
+        //if (profesor.prototype==Profesorado.prototype){
+            this.profesorado.push(profesor);
+        //}
     }
     addProfesor(nombre,apellidos,dni,asignatura){
         let profe=new Profesorado(nombre,apellidos,dni,asignatura);
         this.masProfesor(profe);
+    }
+    toString(){
+        return this.nombre+":"+this.horas+":"+this.profesores;
     }
 }

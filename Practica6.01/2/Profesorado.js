@@ -33,4 +33,9 @@ export class Profesorado{
     setAsignatura(asig){
         this.asignatura=asig;
     }
+
+    //Métodos de clase
+    toString(){
+        return this.nombre+":"+this.apellidos+":"+this.dni+":"+this.asignatura;
+    }
 }
