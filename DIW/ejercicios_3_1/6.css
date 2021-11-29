@@ -1,0 +1,13 @@
+p {
+    font-family: Garamond;
+}
+body > p:first-of-type, body > p:last-of-type {
+    font-weight: bold;
+}
+div > p:first-of-type {
+    color:  #7AC5CD;
+}
+ul li p {
+    color: #000000;
+    text-decoration: underline;
+}

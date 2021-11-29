@@ -1,0 +1,31 @@
+p:first-of-type {
+    color:  red;
+}
+p:last-of-type {
+    color: blue;
+}
+div > p:nth-child(2) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+div > p:nth-child(3) {
+    color: #CC0000;
+}
+div > p:nth-child(4) {
+    background-color: #00FF00;
+}
+div > p:nth-child(5) {
+    font-size: 22px;
+}
+
+/* Primer ejemplo de subconjunto, seleccionando varios elementos hijos desde el final */
+div > p:nth-last-child(2), div > p:nth-last-child(3) {
+    color: fuchsia;
+}
+/* Segundo ejemplo de subconjunto, seleccionando varios elementos hijos desde el principio */
+div > p:nth-child(6), div > p:nth-child(7){
+    background-color: fuchsia;
+}
+/* Tercer ejemplo de subconjunto, seleccionado varios elementos por tipo */
+p:nth-of-type(8), p:nth-of-type(9), p:nth-of-type(10){
+    color:goldenrod;
+}
