@@ -1,0 +1,16 @@
+.elegante {
+    font-family: 'Times New Roman', Times, serif;
+    color: violet;
+}
+
+.serio {
+    font-family: 'Courier New', Courier, monospace;
+    color: #8C8C8C;
+}
+
+p.elegante:first-letter {
+    font-size: 30px;
+}
+p.serio:first-line {
+    text-decoration:underline;
+}
