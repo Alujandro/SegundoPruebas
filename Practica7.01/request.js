@@ -1,5 +1,5 @@
 "use strict";
-import { todos } from "./personajes";
+import * as personajes from "./personajes.js";
 
 var objeto=null;
 const promesa = new Promise((resolver, rechazar) => { // promesa con “petición al servidor”
@@ -81,9 +81,7 @@ function listaPersonajes(oj){
         let arr= persona.split("/"); //Dividimos la dirección en un array, la posición 5 contiene el número del personaje que usaremos después
         console.log(arr[5]);
     });
-    for (let i=0; i<5; i++){
-        console.log(todos().results);
-    }
+    console.log(personajes.todosPers);
 }
 
 //Muestra todos los datos especificados de la película indicada
