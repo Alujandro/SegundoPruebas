@@ -17,7 +17,8 @@ function consultaPersonajes() {
             pag=JSON.parse(httpRequest.response).next;
             todosPers.push(JSON.parse(httpRequest.response));
             pers++;
-            if (pers==17){
+            if (pers==17){  //Esto lo hago, porque aparentemente el personaje 17 no existe y no se me ocurre otra forma mejor de evitar que el programa no funcione
+                todosPers.push(false);
                 pers++;
             }
             pag="https://swapi.dev/api/people/"+pers;
@@ -26,6 +27,7 @@ function consultaPersonajes() {
             } else {
                 pers=1;
                 hecho=true;
+                return todosPers;
             }
         }
     };

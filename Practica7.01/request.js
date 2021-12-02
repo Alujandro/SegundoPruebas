@@ -111,8 +111,13 @@ function nuevoEnd(objeto){
 
 //Función que devuelve un array de personajes
 function personajeI(pers){
+try {
     let num=Number(pers);
     return lisPer[num-1].name;
+}
+catch {
+    
+}
 }
 
 obtenerPeliculas();
