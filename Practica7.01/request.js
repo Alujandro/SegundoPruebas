@@ -3,7 +3,7 @@ import * as personajes from "./personajes.js";
 
 var peliculas=null;
 var lisPer=personajes.obtenerPersonajes();
-function obtenerPeliculas() {
+export function obtenerPeliculas() {
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET","https://swapi.dev/api/films",true); // Se abre la conexión
     httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -19,10 +19,11 @@ function obtenerPeliculas() {
     httpRequest.send(); // Se envía la acción y la información (opcional) al servidor
 };
 
+//Función que muestra el menú por pantalla
 function menuPelis(ojeto){
-    //H1 de estar guars
+    //H1 de Star Wars
     creaTitulo("Star War API");
-    //Ache dos de estar guars
+    //H2 de Star Wars
     creaSubtitulo("Peliculas - "+ojeto.count,"feo");
     //Lista de películas
     listaPelis(ojeto);
@@ -33,6 +34,7 @@ function menuPelis(ojeto){
     document.getElementById("feo").appendChild(dib);
 }
 
+//Función 
 function listaPelis(ojeto){
     let lista=document.createElement("ul");
     let titulos=ojeto.results;
@@ -42,7 +44,7 @@ function listaPelis(ojeto){
         lista.appendChild(prime);
     });
     document.getElementById("feo").appendChild(lista);
-    nuevoEnd(ojeto);//Para las funciones de los enlaces
+    nuevoEnd(ojeto);//Para crear los event listener de las funciones de los enlaces
 }
 
 //Introduce un h1 con el contenido que se le pasa dentro del div feo, porque en principio no es necesario un h1 dentro de otro elemento
@@ -111,7 +113,7 @@ function nuevoEnd(objeto){
 
 //Función que devuelve un array de personajes
 function personajeI(pers){
-try {
+try {   //Este try catch es por si no llegan los datos bien
     let num=Number(pers);
     return lisPer[num-1].name;
 }
@@ -119,5 +121,3 @@ catch {
     
 }
 }
-
-obtenerPeliculas();
