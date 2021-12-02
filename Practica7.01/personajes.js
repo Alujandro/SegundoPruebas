@@ -17,7 +17,8 @@ function consultaPersonajes() {
             pag=JSON.parse(httpRequest.response).next;
             todosPers.push(JSON.parse(httpRequest.response));
             pers++;
-            if (pers==17){
+            if (pers==17){  //Esto lo hago, porque aparentemente el personaje 17 no existe y ahora mismo no se me ocurre otra forma mejor de evitar que el programa se muera
+                todosPers.push(false);
                 pers++;
             }
             pag="https://swapi.dev/api/people/"+pers;
@@ -26,12 +27,14 @@ function consultaPersonajes() {
             } else {
                 pers=1;
                 hecho=true;
+                return todosPers;
             }
         }
     };
     httpRequest.send(); // Se envía la acción y la información (opcional) al servidor
 };
 
+//Esto lo hago porque un bucle while me estaba dando demasiados problemas
 export function obtenerPersonajes(){
     consultaPersonajes();
     return todosPers;
