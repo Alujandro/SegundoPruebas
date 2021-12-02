@@ -17,24 +17,24 @@ function consultaPersonajes() {
             pag=JSON.parse(httpRequest.response).next;
             todosPers.push(JSON.parse(httpRequest.response));
             pers++;
-            if (pers==17){  //Esto lo hago, porque aparentemente el personaje 17 no existe y ahora mismo no se me ocurre otra forma mejor de evitar que el programa se muera
+            if (pers==17){  //Esto lo hago, porque aparentemente el personaje 17 no existe y ahora mismo no se me ocurre otra forma mejor de evitar que el programa se muera.
                 todosPers.push(false);
                 pers++;
             }
-            pag="https://swapi.dev/api/people/"+pers;
-            if (pers<84 && hecho==false){
+            pag="https://swapi.dev/api/people/"+pers; //Esta línea cambia la página en la que se busca
+            if (pers<84 && hecho==false){ //El último personaje es le 83, así me evito los errores de buscar en páginas que no existen.
                 consultaPersonajes();
             } else {
                 pers=1;
                 hecho=true;
-                return todosPers;
+                return todosPers; //El return es para salir
             }
         }
     };
     httpRequest.send(); // Se envía la acción y la información (opcional) al servidor
 };
 
-//Esto lo hago porque un bucle while me estaba dando demasiados problemas
+//Esta función la hago porque un bucle while me estaba dando demasiados problemas.
 export function obtenerPersonajes(){
     consultaPersonajes();
     return todosPers;
