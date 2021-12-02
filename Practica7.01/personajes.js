@@ -1,29 +1,30 @@
 "use strict";
 
-export var todosPers=[];
-var hayPag=true;
-var vueltas=0;
-var pag="https://swapi.dev/api/people";
+var todosPers=[];
+var pag="https://swapi.dev/api/people/";
 
-while (hayPag || vueltas>50){
-const promesa = new Promise((resolver, rechazar) => { // promesa con “petición al servidor”
-        fetch(pag, { // Dirección para realizar fetch
-        method:"GET",  // Establecemos método GET
-        headers: {  // Se indica en las cabeceras cómo es el contenido
-        'Content-type': 'application/x-www-form-urlencoded'
+function consultaPersonajes() {
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.open("GET",pag,true); // Se abre la conexión
+    httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    httpRequest.onreadystatechange = function(){ // Comportamiento de onreadystatechange
+        if (httpRequest.readyState == 1) {// Si la comunicación está abierta
+            console.log('Cargando...');
         }
-        }).then((respuesta) =>{  // Código a ejecutar al recibir la respuesta
-            if (respuesta.ok) { // Si la respuesta es correcta
-                respuesta.text().then((datos) => { // Si se convierte a texto
-                    //todosPers = JSON.parse(datos); // Respuesta en un div
-                    todosPers.push(JSON.parse(datos));
-                    pag=todosPers[todosPers.length-1].next;
-                    if (pag==null){
-                        hayPag=false;
-                    }
-                });
+        if (httpRequest.readyState == 4 && httpRequest.status == 200){// Si se ha completado
+            pag=JSON.parse(httpRequest.response).next;
+            todosPers.push(JSON.parse(httpRequest.response));
+            if (pag!=null){
+                consultaPersonajes();
+            } else {
+                //return todosPers;
             }
-        });
-        resolver(todosPers);
-});
+        }
+    };
+    httpRequest.send(); // Se envía la acción y la información (opcional) al servidor
+};
+
+export function obtenerPersonajes(){
+    consultaPersonajes();
+    return todosPers;
 }

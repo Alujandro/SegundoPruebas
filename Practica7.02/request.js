@@ -2,21 +2,23 @@
 import * as personajes from "./personajes.js";
 
 var peliculas=null;
-function obtenerPeliculas() {
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET","https://swapi.dev/api/films",true); // Se abre la conexión
-    httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    httpRequest.onreadystatechange = function(){ // Comportamiento de onreadystatechange
-        if (httpRequest.readyState == 1) {// Si la comunicación está abierta
-            console.log('Cargando...');
+const promesa = new Promise((resolver, rechazar) => { // promesa con “petición al servidor”
+    fetch("https://swapi.dev/api/films", { // Dirección para realizar fetch
+    method:"GET",  // Establecemos método GET
+    headers: {  // Se indica en las cabeceras cómo es el contenido
+    'Content-type': 'application/x-www-form-urlencoded'
+    }
+    }).then((respuesta) =>{  // Código a ejecutar al recibir la respuesta
+
+        if (respuesta.ok) { // Si la respuesta es correcta
+            respuesta.text().then((datos) => { // Si se convierte a texto
+                peliculas = JSON.parse(datos); // Respuesta en un div
+                menuPelis(peliculas);
+            });
         }
-        if (httpRequest.readyState == 4 && httpRequest.status == 200){// Si se ha completado
-            peliculas=JSON.parse(httpRequest.response); // Respuesta por la consola
-            menuPelis(peliculas);
-        }
-    };
-    httpRequest.send(); // Se envía la acción y la información (opcional) al servidor
-};
+    });
+    resolver(peliculas);
+});
 
 function menuPelis(ojeto){
     //H1 de estar guars
@@ -79,7 +81,7 @@ function listaPersonajes(oj){
         let arr= persona.split("/"); //Dividimos la dirección en un array, la posición 5 contiene el número del personaje que usaremos después
         console.log(arr[5]);
     });
-    console.log(personajes.obtenerPersonajes());
+    console.log(personajes.todosPers);
 }
 
 //Muestra todos los datos especificados de la película indicada
@@ -104,5 +106,3 @@ function nuevoEnd(objeto){
         acabo[i].addEventListener('click', function (evento){ muestraPeli(evento.target, objeto)});
     }
 }
-
-obtenerPeliculas();
