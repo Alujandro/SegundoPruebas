@@ -2,6 +2,7 @@
 import * as personajes from "./personajes.js";
 
 var peliculas=null;
+var lisPer=personajes.obtenerPersonajes();
 function obtenerPeliculas() {
     var httpRequest = new XMLHttpRequest();
     httpRequest.open("GET","https://swapi.dev/api/films",true); // Se abre la conexión
@@ -74,12 +75,15 @@ function creaParrafo(testo){
 }
 
 function listaPersonajes(oj){
-    let li=document.createElement("ul");
+    let ul=document.createElement("ul");
     oj.forEach(persona => {
+        let li=document.createElement("li");
         let arr= persona.split("/"); //Dividimos la dirección en un array, la posición 5 contiene el número del personaje que usaremos después
-        console.log(arr[5]);
+        li.innerHTML=personajeI(arr[5]);
+        console.log(personajeI(arr[5]));
+        ul.appendChild(li);
     });
-    console.log(personajes.obtenerPersonajes());
+    document.getElementById("dinamica").appendChild(ul);
 }
 
 //Muestra todos los datos especificados de la película indicada
@@ -103,6 +107,12 @@ function nuevoEnd(objeto){
     for (let i=0; i<acabo.length; i++){
         acabo[i].addEventListener('click', function (evento){ muestraPeli(evento.target, objeto)});
     }
+}
+
+//Función que devuelve un array de personajes
+function personajeI(pers){
+    let num=Number(pers);
+    return lisPer[num-1].name;
 }
 
 obtenerPeliculas();

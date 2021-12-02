@@ -1,7 +1,9 @@
 "use strict";
 
 var todosPers=[];
-var pag="https://swapi.dev/api/people/";
+var pers=1;
+var hecho=false;
+var pag="https://swapi.dev/api/people/"+pers;
 
 function consultaPersonajes() {
     var httpRequest = new XMLHttpRequest();
@@ -14,10 +16,16 @@ function consultaPersonajes() {
         if (httpRequest.readyState == 4 && httpRequest.status == 200){// Si se ha completado
             pag=JSON.parse(httpRequest.response).next;
             todosPers.push(JSON.parse(httpRequest.response));
-            if (pag!=null){
+            pers++;
+            if (pers==17){
+                pers++;
+            }
+            pag="https://swapi.dev/api/people/"+pers;
+            if (pers<84 && hecho==false){
                 consultaPersonajes();
             } else {
-                //return todosPers;
+                pers=1;
+                hecho=true;
             }
         }
     };
