@@ -1,0 +1,23 @@
+body {
+    background-color: black;
+    color: white;
+    width: 80%;
+    margin:auto;
+    float: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+h3 {
+    margin-left: 1%;
+}
+
+p {
+    margin-left: 2%;
+}
+
+ul {
+    margin-left: 2%;
+}
