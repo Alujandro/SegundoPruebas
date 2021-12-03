@@ -1,6 +1,7 @@
 "use strict";
+import * as muestra from "./mostrar.js";
 var digis="https://digimon-api.vercel.app/api/digimon";
-
+var digimones=null;
 export const promesa = new Promise((resolver, rechazar) => { // promesa con “petición al servidor”
     fetch(digis, { // Dirección para realizar fetch
     method:"GET",  // Establecemos método GET
@@ -11,10 +12,15 @@ export const promesa = new Promise((resolver, rechazar) => { // promesa con “p
 
         if (respuesta.ok) { // Si la respuesta es correcta
             respuesta.text().then((datos) => { // Si se convierte a texto
-                peliculas = JSON.parse(datos); // Respuesta en un div
-                menuPelis(peliculas);
+                digimones = JSON.parse(datos); // Respuesta en un div
+                pograma();
             });
         }
     });
-    resolver(peliculas);
+    resolver(digimones);
 });
+
+function pograma(){
+    muestra.menu();
+    muestra.resumenDigimon(5,digimones);
+}
