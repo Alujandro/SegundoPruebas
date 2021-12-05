@@ -25,7 +25,7 @@ export const promesa = new Promise((resolver, rechazar) => { // promesa con “p
 //Todos los getters que puedo necesitar
 export function getFromNombre(nom){
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].name=nom){
+        if (digilista[i].name==nom){
             return digilista[i];
         }
     }
@@ -62,7 +62,7 @@ export function getFresh(){
 export function getTraining(){
     let arr=[]; //In Training
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].level="In Training"){
+        if (digilista[i].level=="In Training"){
             arr.push(digilista[i]);
         }
     }
@@ -71,7 +71,7 @@ export function getTraining(){
 export function getRookie(){
     let arr=[]; //Rookie
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].level="Rookie"){
+        if (digilista[i].level=="Rookie"){
             arr.push(digilista[i]);
         }
     }
@@ -80,7 +80,7 @@ export function getRookie(){
 export function getChampion(){
     let arr=[]; //Champion
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].level="Champion"){
+        if (digilista[i].level=="Champion"){
             arr.push(digilista[i]);
         }
     }
@@ -89,7 +89,7 @@ export function getChampion(){
 export function getUltimate(){
     let arr=[]; //Ultimate
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].level="Ultimate"){
+        if (digilista[i].level=="Ultimate"){
             arr.push(digilista[i]);
         }
     }
@@ -98,7 +98,7 @@ export function getUltimate(){
 export function getMega(){
     let arr=[]; //Mega
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].level="Mega"){
+        if (digilista[i].level=="Mega"){
             arr.push(digilista[i]);
         }
     }
