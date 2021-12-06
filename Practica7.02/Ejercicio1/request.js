@@ -22,8 +22,9 @@ export const promesa = new Promise((resolver, rechazar) => { // promesa con “p
     resolver(digilista);
 });
 
-//Todos los getters que puedo necesitar
+//Todos los getters que puedo necesitar, creo que algunos no se han llegado a utilizar.
 export function getFromNombre(nom){
+    //Obtiene el objeto entero de un digimon a partir del nombre.
     for (let i=0; i<digilista.length; i++){
         if (digilista[i].name==nom){
             return digilista[i];
@@ -44,12 +45,15 @@ export function getTodos(){
     return digilista;
 }
 export function allNombres(){
+    //Recoge una lista con todos los nombres
     let arr=[];
     for (let i=0; i<digilista.length; i++){
         arr.push(digilista[i].name);
     }
     return arr;
 }
+
+//Obtienen una lista de todos los digimones por nivel
 export function getFresh(){
     let arr=[]; //Fresh
     for (let i=0; i<digilista.length; i++){

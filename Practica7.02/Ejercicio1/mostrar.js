@@ -25,6 +25,7 @@ function estatico(){
 
 function sugestiones(){
     //Esto debería crear un form con un único parámetro de entrada que al introducir texto haga sugerencias de nombres de digimones.
+    //Primero crea el div que contiene el recuadro de búsqueda con el texto y el botón, este botón debe estar fuera del form, porque de no ser así el programa no funciona.
     let div=document.createElement("div");
     div.id="formol";
     let form=document.createElement("form");
@@ -44,7 +45,7 @@ function sugestiones(){
     for (let i=0; i<digimon.allNombres().length; i++){
         datalist.innerHTML+="<option value='"+digimon.allNombres()[i]+"'>";
     }
-
+    //Guardamos todos los elementos en el form excepto el botón que va dentro del div y éste se guarda dentro del elemento estatico, que es la parte que no va a cambiar de la página.
     form.appendChild(label);
     form.appendChild(input);
     form.appendChild(datalist);
@@ -54,7 +55,7 @@ function sugestiones(){
 }
 
 function botonesNivel(){
-    //Crea los botones para mostrar un listado de digimones por nivel.
+    //Crea los botones para mostrar un listado de digimones por nivel, es una simple tabla con una celda por nivel.
     let tabla=document.createElement("table");
     tabla.id="niveles";
     let lin=document.createElement("tr");
@@ -65,11 +66,14 @@ function botonesNivel(){
 }
 
 function muestraBusqueda(){
+    //Esta función es para mostrar el digimon que se busca en el cuadro de texto de búsqueda.
     let nom=document.getElementById("buscar").value;
     muestraDigimon(nom);
 }
 
 function muestraDigimon(nom){
+    //Esta función nos muestra en un div específico la imagen, nombre y nivel del digimon que le pasamos (el nombre).
+    //Primero comprobamos si ya hay un digimon mostrado en pantalla para poder quitarlo antes de mostrar otro.
     let es=document.getElementById("digivice");
     if (es!=null){
         es.remove();
@@ -91,16 +95,20 @@ function muestraDigimon(nom){
 }
 
 function dinDiv(ide){
+    //Función sencilla para crear divs con un id específico, no lo he usado tanto como me esperaba.
     let div=document.createElement("div");
     div.id=ide;
     document.getElementById("dinamico").appendChild(div);
 }
 
+//Todas estas funciones son para mostrar un listado con el que se puede interactuar de digimones por nivel, son todos iguales salvo por el detalle de que cada uno es para un nivel, podría ahorrarme código, pero cuando me di cuenta, ya los tenía todos hehcos.
 function muestraFresh(){
+    //Primero se comprueba si ya hay un listado y si lo hay lo elimina.
     let es=document.getElementById("listin");
     if (es!=null){
-        es.innerHTML="";
+        es.remove();
     }
+    //Luego crea un div llamado listín y lo rellena con una lista desordenada con todos los digimon de esa categoría.
     dinDiv("listin");
     let fr=digimon.getFresh();
     let ul=document.createElement("ul");
@@ -115,9 +123,10 @@ function muestraFresh(){
 }
 
 function muestraTraining(){
+    //Igual que el anterior
     let es=document.getElementById("listin");
     if (es!=null){
-        es.innerHTML="";
+        es.remove();
     }
     dinDiv("listin");
     let fr=digimon.getTraining();
@@ -133,9 +142,10 @@ function muestraTraining(){
 }
 
 function muestraRookie(){
+    //Igual que el anterior
     let es=document.getElementById("listin");
     if (es!=null){
-        es.innerHTML="";
+        es.remove();
     }
     dinDiv("listin");
     let fr=digimon.getRookie();
@@ -151,9 +161,10 @@ function muestraRookie(){
 }
 
 function muestraChampion(){
+    //Igual que el anterior
     let es=document.getElementById("listin");
     if (es!=null){
-        es.innerHTML="";
+        es.remove();
     }
     dinDiv("listin");
     let fr=digimon.getChampion();
@@ -169,9 +180,10 @@ function muestraChampion(){
 }
 
 function muestraUltimate(){
+    //Igual que el anterior
     let es=document.getElementById("listin");
     if (es!=null){
-        es.innerHTML="";
+        es.remove();
     }
     dinDiv("listin");
     let fr=digimon.getUltimate();
@@ -187,9 +199,10 @@ function muestraUltimate(){
 }
 
 function muestraMega(){
+    //Igual que el anterior
     let es=document.getElementById("listin");
     if (es!=null){
-        es.innerHTML="";
+        es.remove();
     }
     dinDiv("listin");
     let fr=digimon.getMega();
@@ -205,7 +218,7 @@ function muestraMega(){
 }
 
 function listeners(){
-    //Crea los event listener.
+    //Crea los event listener de todos los elementos estáticos de la página web, que son el botón de buscar y los botones de los niveles.
     document.getElementById("encontrar").addEventListener('click', function (evento){ muestraBusqueda(evento) });
     document.getElementById("fresh").addEventListener("click", function (evento){ muestraFresh(evento) });
     document.getElementById("training").addEventListener("click", function (evento){ muestraTraining(evento) });
@@ -216,7 +229,7 @@ function listeners(){
 }
 
 function listeners2(){
-    //Crea los event listener que van a aparecer o desaparecer constantemente
+    //Crea los event listener que van a aparecer o desaparecer constantemente, o sea, todos los event listener de los elementos de la lista desordenada que antes he llamado don.
     let cliqueo=document.getElementsByClassName("don");
     for (let i=0; i<cliqueo.length; i++){
         cliqueo[i].addEventListener('click', function (evento){ muestraDigimon(cliqueo[i].innerHTML, evento) });
