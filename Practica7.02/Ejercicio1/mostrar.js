@@ -1,6 +1,6 @@
 "use strict";
 import * as digimon from "./request.js";
-var salida=document.getElementById("feo");
+var salida=document.getElementById("feo"); 
 
 export function menu(){
     //Creacion de los divs que contendrán la página.
@@ -25,6 +25,8 @@ function estatico(){
 
 function sugestiones(){
     //Esto debería crear un form con un único parámetro de entrada que al introducir texto haga sugerencias de nombres de digimones.
+    let div=document.createElement("div");
+    div.id="formol";
     let form=document.createElement("form");
     form.className="busqueda";
     let label=document.createElement("label");
@@ -46,8 +48,9 @@ function sugestiones(){
     form.appendChild(label);
     form.appendChild(input);
     form.appendChild(datalist);
-    document.getElementById("estatico").appendChild(form);
-    document.getElementById("estatico").appendChild(button);
+    div.appendChild(form);
+    div.appendChild(button);
+    document.getElementById("estatico").appendChild(div);
 }
 
 function botonesNivel(){
@@ -67,12 +70,16 @@ function muestraBusqueda(){
 }
 
 function muestraDigimon(nom){
-    document.getElementById("dinamico").innerHTML="";
+    let es=document.getElementById("digivice");
+    if (es!=null){
+        es.remove();
+    }
     let ele=digimon.getFromNombre(nom);
     let div=document.createElement("div");
     let h1=document.createElement("h1");
     let h2=document.createElement("h2");
     let imagen=document.createElement("img");
+    div.id="digivice";
     imagen.src=ele.img;
     h1.innerHTML=ele.name;
     h2.innerHTML=ele.level;
@@ -81,6 +88,120 @@ function muestraDigimon(nom){
     div.appendChild(imagen);
 
     document.getElementById("dinamico").appendChild(div);
+}
+
+function dinDiv(ide){
+    let div=document.createElement("div");
+    div.id=ide;
+    document.getElementById("dinamico").appendChild(div);
+}
+
+function muestraFresh(){
+    let es=document.getElementById("listin");
+    if (es!=null){
+        es.innerHTML="";
+    }
+    dinDiv("listin");
+    let fr=digimon.getFresh();
+    let ul=document.createElement("ul");
+    for (let i=0; i<fr.length; i++){
+        let li=document.createElement("li");
+        li.className="don";
+        li.innerHTML=fr[i].name;
+        ul.appendChild(li);
+    }
+    document.getElementById("listin").appendChild(ul);
+    listeners2();
+}
+
+function muestraTraining(){
+    let es=document.getElementById("listin");
+    if (es!=null){
+        es.innerHTML="";
+    }
+    dinDiv("listin");
+    let fr=digimon.getTraining();
+    let ul=document.createElement("ul");
+    for (let i=0; i<fr.length; i++){
+        let li=document.createElement("li");
+        li.className="don";
+        li.innerHTML=fr[i].name;
+        ul.appendChild(li);
+    }
+    document.getElementById("listin").appendChild(ul);
+    listeners2();
+}
+
+function muestraRookie(){
+    let es=document.getElementById("listin");
+    if (es!=null){
+        es.innerHTML="";
+    }
+    dinDiv("listin");
+    let fr=digimon.getRookie();
+    let ul=document.createElement("ul");
+    for (let i=0; i<fr.length; i++){
+        let li=document.createElement("li");
+        li.className="don";
+        li.innerHTML=fr[i].name;
+        ul.appendChild(li);
+    }
+    document.getElementById("listin").appendChild(ul);
+    listeners2();
+}
+
+function muestraChampion(){
+    let es=document.getElementById("listin");
+    if (es!=null){
+        es.innerHTML="";
+    }
+    dinDiv("listin");
+    let fr=digimon.getChampion();
+    let ul=document.createElement("ul");
+    for (let i=0; i<fr.length; i++){
+        let li=document.createElement("li");
+        li.className="don";
+        li.innerHTML=fr[i].name;
+        ul.appendChild(li);
+    }
+    document.getElementById("listin").appendChild(ul);
+    listeners2();
+}
+
+function muestraUltimate(){
+    let es=document.getElementById("listin");
+    if (es!=null){
+        es.innerHTML="";
+    }
+    dinDiv("listin");
+    let fr=digimon.getUltimate();
+    let ul=document.createElement("ul");
+    for (let i=0; i<fr.length; i++){
+        let li=document.createElement("li");
+        li.className="don";
+        li.innerHTML=fr[i].name;
+        ul.appendChild(li);
+    }
+    document.getElementById("listin").appendChild(ul);
+    listeners2();
+}
+
+function muestraMega(){
+    let es=document.getElementById("listin");
+    if (es!=null){
+        es.innerHTML="";
+    }
+    dinDiv("listin");
+    let fr=digimon.getMega();
+    let ul=document.createElement("ul");
+    for (let i=0; i<fr.length; i++){
+        let li=document.createElement("li");
+        li.className="don";
+        li.innerHTML=fr[i].name;
+        ul.appendChild(li);
+    }
+    document.getElementById("listin").appendChild(ul);
+    listeners2();
 }
 
 function listeners(){
@@ -92,4 +213,12 @@ function listeners(){
     document.getElementById("champion").addEventListener("click", function (evento){ muestraChampion(evento) });
     document.getElementById("ultimate").addEventListener("click", function (evento){ muestraUltimate(evento) });
     document.getElementById("mega").addEventListener("click", function (evento){ muestraMega(evento) });
+}
+
+function listeners2(){
+    //Crea los event listener que van a aparecer o desaparecer constantemente
+    let cliqueo=document.getElementsByClassName("don");
+    for (let i=0; i<cliqueo.length; i++){
+        cliqueo[i].addEventListener('click', function (evento){ muestraDigimon(cliqueo[i].innerHTML, evento) });
+    }
 }

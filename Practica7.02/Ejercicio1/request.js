@@ -53,7 +53,7 @@ export function allNombres(){
 export function getFresh(){
     let arr=[]; //Fresh
     for (let i=0; i<digilista.length; i++){
-        if (digilista[i].level="Fresh"){
+        if (digilista[i].level=="Fresh"){
             arr.push(digilista[i]);
         }
     }

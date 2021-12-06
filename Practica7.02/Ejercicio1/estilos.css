@@ -1,0 +1,55 @@
+body {
+    background-color: navy;
+    color:snow;
+}
+
+h1 {
+    text-align: center;
+    width: auto;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: blueviolet;
+}
+h2 {
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(177, 0, 88);
+}
+
+#listin {
+    float: left;
+}
+#listin ul li:hover{
+    background-color: #1100FF;
+}
+
+#digivice {
+    float:right;
+    text-align: right;
+}
+
+#buscar {
+    display: inline;
+}
+
+#formol {
+    width: fit-content;
+    float: right;
+    border: 1px solid blueviolet;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#niveles {
+    text-align: center;
+    width: 100%;
+}
+#niveles tr td {
+    border: 1px solid blueviolet;
+    padding: 5px;
+    border-radius: 5px;
+}
+#niveles tr td:hover{
+    background-color: #1100FF;
+}
