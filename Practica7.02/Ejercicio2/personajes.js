@@ -1,11 +1,9 @@
 "use strict";
-
+//No consigo acceder a la lista de personajes y no entiendo el porqué
 export var todosPers=[];
-var hayPag=true;
-var vueltas=0;
 var pag="https://swapi.dev/api/people";
 
-
+function consultaPersonajes(){
 const promesa = new Promise((resolver, rechazar) => { // promesa con “petición al servidor”
         fetch(pag, { // Dirección para realizar fetch
         method:"GET",  // Establecemos método GET
@@ -20,11 +18,18 @@ const promesa = new Promise((resolver, rechazar) => { // promesa con “petició
                     pag=todosPers[todosPers.length-1].next;
                     console.log(pag);
                     console.log(todosPers);
-                    if (pag==null){
-                        hayPag=false;
+                    if (pag!=null){
+                        obtenerPersonajes();
                     }
                 });
             }
         });
         resolver(todosPers);
 });
+}
+
+//Esta función la hago porque un bucle while me estaba dando demasiados problemas.
+export function obtenerPersonajes(){
+    consultaPersonajes();
+    return todosPers;
+}

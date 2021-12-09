@@ -20,10 +20,11 @@ const promesa = new Promise((resolver, rechazar) => { // promesa con “petició
     resolver(peliculas);
 });
 
+//Función que muestra el menú por pantalla
 function menuPelis(ojeto){
-    //H1 de estar guars
+    //H1 de Star Wars
     creaTitulo("Star War API");
-    //Ache dos de estar guars
+    //H2 de Star Wars
     creaSubtitulo("Peliculas - "+ojeto.count,"feo");
     //Lista de películas
     listaPelis(ojeto);
@@ -34,6 +35,7 @@ function menuPelis(ojeto){
     document.getElementById("feo").appendChild(dib);
 }
 
+//Función 
 function listaPelis(ojeto){
     let lista=document.createElement("ul");
     let titulos=ojeto.results;
@@ -43,7 +45,7 @@ function listaPelis(ojeto){
         lista.appendChild(prime);
     });
     document.getElementById("feo").appendChild(lista);
-    nuevoEnd(ojeto);//Para las funciones de los enlaces
+    nuevoEnd(ojeto);//Para crear los event listener de las funciones de los enlaces
 }
 
 //Introduce un h1 con el contenido que se le pasa dentro del div feo, porque en principio no es necesario un h1 dentro de otro elemento
@@ -76,12 +78,15 @@ function creaParrafo(testo){
 }
 
 function listaPersonajes(oj){
-    let li=document.createElement("ul");
+    let ul=document.createElement("ul");
     oj.forEach(persona => {
+        let li=document.createElement("li");
         let arr= persona.split("/"); //Dividimos la dirección en un array, la posición 5 contiene el número del personaje que usaremos después
-        console.log(arr[5]);
+        li.innerHTML=personajeI(arr[5]);
+        console.log(personajeI(arr[5]));
+        ul.appendChild(li);
     });
-    console.log(personajes.todosPers);
+    document.getElementById("dinamica").appendChild(ul);
 }
 
 //Muestra todos los datos especificados de la película indicada
@@ -105,4 +110,15 @@ function nuevoEnd(objeto){
     for (let i=0; i<acabo.length; i++){
         acabo[i].addEventListener('click', function (evento){ muestraPeli(evento.target, objeto)});
     }
+}
+
+//Función que devuelve un array de personajes
+function personajeI(pers){
+try {   //Este try catch es por si no llegan los datos bien
+    let num=Number(pers);
+    return lisPer[num-1].name;
+}
+catch {
+    
+}
 }
