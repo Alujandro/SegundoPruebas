@@ -8,6 +8,7 @@
   padding: 5px;
   width: 100px;
   background: #CCCCCC;
+  margin-left: auto; /* Para ajustar la barra de navegación a la derecha pondría esta línea, para añadir la foto del pato, la metería dentro del navbar */
 }
 
 #navbar ul {

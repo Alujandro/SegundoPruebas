@@ -2,7 +2,26 @@
 <html>
 <head>
     <title>Result</title>
-    <link rel="stylesheet" href="style.css" />
+    <style>
+        div {
+            margin: 15px;
+            border: 1px;
+            padding: 20px;
+        }
+        #one {
+            border: solid 1px #000;
+        }
+        #two {
+            border: dotted 1px #555;
+        }
+        #three {
+            border: dashed 1px #CCC;
+            margin: -20px; /* Al hacer esto, el border invade el elemento superior y los izquierdo y derecho se los come el borde de la pantalla */
+        }
+        span {
+            border: solid 1px #FF0000; /* La principal diferencia es que no ocupan todo el ancho de la página, sólo el ancho de su contenido */
+        }
+    </style>
 </head>
 <body>
 
@@ -14,6 +33,9 @@
     Our second div, <span>with</span> <span>spans</span>!
 </div>
 
+<div id="three">
+    El contenido del div namber zri.
+</div>
 
 </body>
 </html>

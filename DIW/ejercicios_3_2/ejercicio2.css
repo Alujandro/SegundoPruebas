@@ -1,7 +1,10 @@
 #box {
     border: 5px dotted red;
-    /* La caja encoje cuando se le elimina el grosor del borde y crece al devolvérselo */
-    margin: 10px;
+    /* La caja encoje cuando se le elimina el grosor del borde y crece al devolvérselo porque el padding se cuenta a partir del border
+     y el background cuenta también con el padding */
+    margin: 15px;
+    /* Si modificamos el margin del box, la separación entre el borde azul y el borde gris de la página aumenta,
+    no afecta a la altura del box, pero si a su anchura */
     padding: 10px; 
     /* Al duplicar el padding se ha aumentado la distancia entre el texto y los bordes de la "caja", aumentando su tamaño,
      al dejarlo a cero ha pasado justo lo contrario, haciendo que la caja se vuelva más delgada */
@@ -10,7 +13,9 @@
 
 body {
     margin: 2px;
+    /* Si incrementamos el margin en body, el espacio entre el border y el borde de la página incrementa, esto hace que el box encoja su ancho pero no el alto */
     border: 1px solid blue;
+    /* Al incrementar el border el box encoje de la misma forma, pero se mantiene el espacio del margin */
     position: absolute;
     top: 0;
     left: 0;

@@ -1,5 +1,7 @@
 div.wrapper {
     float: right;
+    position: relative;
+    bottom: 10px; /* Haciendo esto, el hueco que hay entre la parte de arriba del wrapper y la página desaparece */
 }
 
 div.grid {
@@ -10,4 +12,10 @@ div.grid {
 
 #moveMe {
     background:blue;
+    position: relative;
+    left: 10px; 
+    top: 10px;
+    /* Lo que sucede es que el elemento se mueve en dirección diagonal acia abajo a la izquierda sin mover a los demás elementos
+     y superponiéndose un poco con el elemento de abajo, esto pasa porque únicamente se mueve, de forma relativa al elemento moveMe y no al resto */
+    
 }

@@ -1,3 +1,9 @@
 #first { 
-    float:left;
+    float:left; 
+    /* Si la imagen no tuviese la propiedad float left, las dos imágenes estarían una encima de la otra con el párrafo continuando en la parte de abajo */
+}
+#second {
+    float: right; 
+    /* Al añadir esta propiedad, el texto rellena los espacios entre las dos imágenes, que estarán una a la izquierda y la otra a la derecha
+    porque la segunda imagen ya no evitaría que el texto rellenase el espacio vacío */
 }

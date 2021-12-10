@@ -7,8 +7,11 @@ div {
 
 #box1 {
     background: #F00;
+    float: left;
 }
 
 #box2 {
     background: #0F0;
+    float: left;
+    margin-left: -20px; /* Al hacer esto, se superponen las dos cajas, poniéndose la segunda por encima de la primera */
 }

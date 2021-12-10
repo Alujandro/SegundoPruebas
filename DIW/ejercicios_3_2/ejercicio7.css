@@ -8,6 +8,7 @@
 #shorter {
     background: #FFFF66;
     padding: 10px;
+    clear: left; /* Se puede poner clear left o clear both  */
 }
 
 ul {

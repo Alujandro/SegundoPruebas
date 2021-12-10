@@ -1,3 +1,10 @@
 div {
     border: 1px solid black;
+    display: inline; 
+    /* Lo que sucede es que los div pasan de ser todo el ancho de la página a ser tan anchos como su contenido, esto hace que se pongan en una sola línea */
+    position: relative;
+    left: 20px;
+    top: 50px;
+    right: 20px;
+    bottom: 50px;
 }
