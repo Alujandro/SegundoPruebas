@@ -1,7 +1,10 @@
 #box {
     border: 5px dotted red;
+    /* La caja encoje cuando se le elimina el grosor del borde y crece al devolvérselo */
     margin: 10px;
-    padding: 10px;
+    padding: 10px; 
+    /* Al duplicar el padding se ha aumentado la distancia entre el texto y los bordes de la "caja", aumentando su tamaño,
+     al dejarlo a cero ha pasado justo lo contrario, haciendo que la caja se vuelva más delgada */
     background: gray;
 }
 
