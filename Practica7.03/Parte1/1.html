@@ -8,11 +8,12 @@
     <title>Trivia API</title>
   </head>
   <body>
+    <div id="fijo">
     <h1>API Trivia</h1>
       <!-- Aquí voy a poner el "formulario" que se necesita para indicar la categoría y cantidad de preguntas -->
-      <p>Número de preguntas:</p>
-        <input type="number" id="cantidad" min="1" max="50" value="10">
-        <p>Categoría: </p>
+      <p>Número de preguntas: 
+        <input type="number" id="cantidad" min="1" max="50" value="10"></p>
+        <p>Categoría: 
         <select id="categoria">
 			    <option value="any">Any Category</option>
 			    <option value="9">General Knowledge</option>
@@ -39,9 +40,11 @@
           <option value="30">Science: Gadgets</option>
           <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
           <option value="32">Entertainment: Cartoon &amp; Animations</option>	
-        </select>	
-        <br><br>
+        </select>	</p>
         <button id="iniciar">Comenzar</button>
+        </div>
+        <div id="preguntas"></div>
+        <div id="resultados"></div>
     <script type="module" src="1.js"></script>
   </body>
 </html>

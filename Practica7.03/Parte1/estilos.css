@@ -1,0 +1,33 @@
+#fijo {
+    width: fit-content;
+    margin: auto;
+    background-color: rgb(157, 203, 255);
+    border: 1px solid blue;
+    border-radius: 3px;
+    padding: 10px;
+}
+#preguntas {
+    width: 80%;
+    margin: auto;
+}
+
+.pregunta, .fallo, .acierto {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 3px;
+}
+.pregunta {
+    border: 1px solid yellow;
+    background-color: rgb(255, 255, 215);
+}
+.fallo {
+    border:1px solid red;
+    background-color: rgb(255, 172, 172);
+}
+.acierto {
+    border: 1px solid green;
+    background-color: rgb(166, 255, 166);
+}
+.hidden {
+    display: none;
+}
