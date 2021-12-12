@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Prueba de pseudoclases de estado</title>
+  <style>
+	  input:indeterminate {
+		padding: 15px;
+		margin: 15px;
+		background-color: orange;
+	  }
+	  input:target, input:checked {
+		padding: 15px;
+		margin: 15px;
+		background-color: purple;
+	  }
+	  input:active {
+		width: 20px;
+		height: 20px;
+	  }
+	  input:inactive {
+		padding: auto;
+		margin: auto;
+	  }
+  </style>
+</head>
+<body>
+    <h1>Prueba de pseudoclases de estado</h1>
+    <form action="">
+		<input type="radio" name="rd" val="v1"/>Prueba 1<br/>
+		<input type="radio" name="rd" val="v2"/>Prueba 2<br/>
+		<input type="radio" name="rd" val="v3"/>Prueba 3<br/>
+		<input type="radio" name="rd" val="v4"/>Prueba 4<br/>
+		<br/>
+		<input type="checkbox" name="ck" val="v1"/>Prueba 1<br/>
+		<input type="checkbox" name="ck" val="v2"/>Prueba 2<br/>
+		<input type="checkbox" name="ck" val="v3"/>Prueba 3<br/>
+		<input type="checkbox" name="ck" val="v4"/>Prueba 4
+    </form>
+
+</body>
+</html>
