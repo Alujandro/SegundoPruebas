@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Ejercicio de pseudo clases de enlaces</title>
+<style type="text/css">
+    table {
+        border-collapse: collapse;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.9em;
+    }
+    th, td {
+        border: 1px solid #333333;
+    }
+    th {
+        background-color: lightgray;
+    }
+    tr:nth-child(odd){
+        background-color: #FFFFCC;
+    }
+    td:nth-child(1) {
+        padding-left: 15px;
+        background-color: #E6F3FF;
+        font-weight: bold;
+    }
+    td.euro {
+        background-repeat: no-repeat;
+        background-image: url('euro.png');
+    }
+    td.dolar {
+        background-repeat: no-repeat;
+        background-image: url('dolar.png');
+    }
+    td.libra {
+        background-repeat: no-repeat;
+        background-image: url('libra.png');
+    }
+    td.yen {
+        background-repeat: no-repeat;
+        background-image: url('yen.png');
+    }
+</style>
+</head>
+
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>Cambio</th>
+            <th>Compra</th>
+            <th>Venta</th>
+            <th>Máximo</th>
+            <th>Mínimo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="euro">Euro/Dolar</td>
+            <td>1.2524</td>
+            <td>1.2527</td>
+            <td>1.2539</td>
+            <td>1.2488</td>
+        </tr>
+        <tr>
+            <td class="dolar">Dolar/Yen</td>
+            <td>119.01</td>
+            <td>119.05</td>
+            <td>119.82</td>
+            <td>119.82</td>
+        </tr>
+        <tr>
+            <td class="libra">Libra/Dolar</td>
+            <td>1.8606</td>
+            <td>1.8611</td>
+            <td>1.8651</td>
+            <td>1.8522</td>
+        </tr>
+        <tr>
+            <td class="yen">Euro/Yen</td>
+            <td>149.09</td>
+            <td>149.13</td>
+            <td>149.79</td>
+            <td>148.96</td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
