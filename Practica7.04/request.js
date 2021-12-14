@@ -1,24 +1,35 @@
 "use strict";
 import * as personajes from "./personajes.js";
+import * as planetas from "./planetas.js";
 
-var peliculas=null;
-const promesa = new Promise((resolver, rechazar) => { // promesa con “petición al servidor”
-    fetch("https://swapi.dev/api/films", { // Dirección para realizar fetch
-    method:"GET",  // Establecemos método GET
-    headers: {  // Se indica en las cabeceras cómo es el contenido
-    'Content-type': 'application/x-www-form-urlencoded'
-    }
-    }).then((respuesta) =>{  // Código a ejecutar al recibir la respuesta
-
-        if (respuesta.ok) { // Si la respuesta es correcta
-            respuesta.text().then((datos) => { // Si se convierte a texto
-                peliculas = JSON.parse(datos); // Respuesta en un div
-                menuPelis(peliculas);
-            });
-        }
-    });
-    resolver(peliculas);
+const urlpelis = "https://swapi.dev/api/films";
+// Petición de los datos para que sea menos caótico
+var peticion = new Request(urlpelis, {
+    method: "GET",
+    headers: new Headers({
+      "Content-type": "application/x-www-form-urlencoded",
+    }),
 });
+
+const peliculas = () => {
+    return new Promise((resolver, rechazar) => {
+      fetch(peticion)
+        .then((respuesta) => respuesta.json())
+        .then((datos) => {
+          resolver(datos);
+        })
+        .catch(() => {
+          rechazar(new Error("Ha habido un error."));
+        });
+    });
+};
+
+const mostrar = async () => {
+    let pelis = await peliculas();
+    menuPelis(pelis);
+};
+
+mostrar();
 
 function menuPelis(ojeto){
     //H1 de estar guars
