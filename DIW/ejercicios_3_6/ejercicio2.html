@@ -16,13 +16,42 @@
         text-align: center;
         text-shadow:4px 4px 0 rgba(0,0,0,0.1);
         padding:10px;
+        width: 33%;
+    }
+
+    html, body, .container {
+      height: 100%;
+    }
+
+    .container {
+      width: 100%;
+      display: flex;
+      display: inline-flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-content: flex-start;
+      
+    }
+
+    .box1, .box2 {
+      flex-basis: 50%;
+      align-self: stretch;
+    }
+    .box3, .box4, .box5 {
+      flex-basis: 20%;
+    }
+    .box6 {
+      flex-basis: 100%;
     }
 
     .box1 { background:#1abc9c;}
     .box2 { background:#3498db;}
-    .box3 { background:#9b59b6;}
-    .box4 { background:#34495e;}
-    .box5 { background:#f1c40f;}
+    .box3 { background:#9b59b6;
+    flex-grow: 4;}
+    .box4 { background:#34495e;
+    flex-shrink: 1;}
+    .box5 { background:#f1c40f;
+    flex-grow: 2;}
     .box6 { background:#e67e22;}
     .box7 { background:#e74c3c;}
     .box8 { background:#bdc3c7;}
