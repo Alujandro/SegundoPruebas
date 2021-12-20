@@ -1,0 +1,54 @@
+#datos {
+  margin: 20px;
+  padding: 10px;
+  border: 2px grey solid;
+}
+
+#formulario {
+  margin: 20px;
+  padding: 10px;
+  border: 2px grey solid;
+}
+
+#informacion {
+  margin: 20px;
+  padding: 10px;
+}
+
+.celda {
+  margin: 3px;
+  padding: 5px;
+}
+
+.borrar {
+  margin: 3px;
+  padding: 5px;
+  float: left;
+}
+
+.borrar:hover {
+  cursor: not-allowed;
+}
+
+.celda:hover {
+  background-color: rgb(200, 211, 236);
+  cursor: pointer;
+}
+
+.bien {
+  font-weight: bold;
+  color: green;
+  background-color: rgb(193, 216, 193);
+  padding: 20px;
+}
+
+.mal {
+  font-weight: bold;
+  color: red;
+  background-color: rgb(252, 168, 168);
+  padding: 20px;
+}
+
+.oculto {
+  display: none;
+}
