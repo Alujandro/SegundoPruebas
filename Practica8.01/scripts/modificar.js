@@ -8,7 +8,8 @@ function aniadir(obj){
 }
 
 function buscar(id){
-    return localStorage.getItem(id);
+    let arr=localStorage.getItem(NOMBREDATOS);
+    return arr[id];
 }
 
 function borrar(id){
