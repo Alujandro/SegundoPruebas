@@ -30,6 +30,10 @@ if (typeof(Storage) !== "undefined") {
         document.getElementById("listar").addEventListener('click', function (evento){ agen.listar() });
         document.getElementById("ordenar").addEventListener('click', function (evento){ agen.ordenar() });
     }
+    function listenerBorrar(){
+        //Crea el listener de eliminar el elemento
+        document.getElementById("borrar").addEventListener('click', function (evento){ agen.borrar(evento.target.value)});
+    }
 } else {
     // Sorry! No Web Storage support..
 }
