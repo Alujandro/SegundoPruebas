@@ -27,6 +27,7 @@ window.onload = () => {
    */
   const db = getFirestore(app);
   const productosColeccion = collection(db, "productos"); //Nombre de mi colección
+  const listasColeccion = collection(db, "listas");
 
   /*** Leer datos.
    *  doc         -> Obtiene la referencia a un documento. Parámetros -> referencia a una colección y un id.
@@ -38,7 +39,7 @@ window.onload = () => {
    */
 
   //*** Uso del doc *****************/
-  const pruebaDoc = async (id) => {
+/*   const pruebaDoc = async (id) => {
     // Referencia al documento (sólo el id).
     const pruebaRef = await doc(productosColeccion, id);
     // Se obtiene el documento de la colección.
@@ -48,18 +49,18 @@ window.onload = () => {
       `Impreso desde pruebaDoc: ${pruebaDoc.id} ${pruebaDoc.data().nombre}`
     );
   };
-  //pruebaDoc("LCy8664CnKt93gzwQfkr");
+ */  //pruebaDoc("LCy8664CnKt93gzwQfkr");
 
-  const obtenerFeosSnap = async () => {
-    const feosDocumentos = await onSnapshot(productosColeccion, (col) => {
+  const obtenerListasSnap = async () => {
+    const feosDocumentos = await onSnapshot(listasColeccion, (col) => {
       datos.innerHTML = "";
       col.docs.map((documento) => {
-        datos.innerHTML += plantillas.pintarFila(documento); //Tenemos que hacer nuestra propia plantilla
-        console.log(plantillas.log(documento));
+        //datos.innerHTML += plantillas.pintarFila(documento); //Tenemos que hacer nuestra propia plantilla
+        console.log(plantillas.log2(documento));
       });
     });
   };
-  //obtenerFeosSnap();
+  obtenerListasSnap();
 
   /* Filtrar datos
    *   query   -> Filtrar los resultados de la consulta. Parámetros -> colección y sentencia where.
