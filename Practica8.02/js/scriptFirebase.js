@@ -1,7 +1,5 @@
 "use strict";
 
-//IMPORTANTE: todos los datos que se pueden visualizar se verán por el log, no he tenido tiempo de diseñar una interfaz
-
 import * as plantillas from "./plantillasFirebase.js";
 import { app } from "./datosFirebase.js";
 import {
@@ -20,11 +18,7 @@ import {
   limit,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-//*** Enlace a las bibliotecas Firebase -> https://firebase.google.com/docs/web/learn-more?authuser=0#libraries-cdn
-
 window.onload = () => {
-  // ****** Firebase ************************************/
-  //const d = document; // Acceso fácil.
   let datos = document.getElementById("datos"); // Contenedor de datos.
 
   /*** Conexión con la base de datos.
@@ -35,16 +29,6 @@ window.onload = () => {
   const productosColeccion = collection(db, "productos"); //Nombre de mi colección
   const listasColeccion = collection(db, "listas");
   const usuariosColeccion = collection(db, "usuarios");
-  
-
-  /*** Leer datos.
-   *  doc         -> Obtiene la referencia a un documento. Parámetros -> referencia a una colección y un id.
-   *  getDoc      -> Obtiene los datos de un documento. Parámetro -> referencia a un documento.
-   *  getDocs     -> Obtiene todos los documentos de una colección. Parámetro -> referencia a una colección.
-   *  onSnapShot  -> Obtiene enlace en tiempo real a la base de datos.
-   *  data()      -> Método para acceder a la información del documento.
-   *  id          -> identificacdor del documento (está fuera del método data()).
-   */
 
 //Introducción a como añadir documentos a una colección, recibe nombre y propietario.
 const anadeLista= async (nom, prop) =>{
@@ -149,12 +133,46 @@ const editDocPrecPro= async(dato, id) => {
       productosColeccion,
       where(campo, comparador, valor)  //Consulta que te da todos los productos con valor superior al que se le pasa
     );
-    const feosFiltrados = await getDocs(consulta);
-    feosFiltrados.docs.map((documento) => {
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
       console.log(plantillas.log(documento));
     });
   };
+
+  const filtrarNombre = async (nombre) => {
+    const consulta = query(
+      productosColeccion,
+      where("nombre","==", nombre)
+    );
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
+      datos.innerHTML += plantillas.pintarFila(documento);
+      console.log(plantillas.log(documento));
+    });
+  }
+  const filtrarPrecio = async (precio, comparador) => {
+    const consulta = query(
+      productosColeccion,
+      where("precio",comparador,precio)
+    );
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
+      datos.innerHTML += plantillas.pintarFila(documento);
+      console.log(plantillas.log(documento));
+    });
+  }
+  const filtrarPeso = async (peso, comparador) => {
+    const consulta = query(
+      productosColeccion,
+      where("peso",comparador,peso)
+    );
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
+      datos.innerHTML += plantillas.pintarFila(documento);
+      console.log(plantillas.log(documento));
+    });
+  }
 
   //filtrarProductos("peso", ">", 1);
 }; // Fin window.load.

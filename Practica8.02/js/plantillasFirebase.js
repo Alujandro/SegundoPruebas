@@ -14,11 +14,13 @@ export const log= (documento) => {
   let precio=documento.data().precio;
   let subtotal=precio*(documento.data().cantidad*100);
 return `
-Cantidad: ${documento.data().cantidad} 
-Nombre: ${documento.data().nombre} 
-Peso: ${documento.data().peso} 
-Precio:  ${documento.data().precio}€ 
-Subtotal: ${subtotal/100}€`;
+<tr id="${documento.id}">
+<td>Cantidad: ${documento.data().cantidad}</td>
+<td>Nombre: ${documento.data().nombre}</td> 
+<td>Peso: ${documento.data().peso}</td>
+<td>Precio:  ${documento.data().precio}€</td> 
+<td>Subtotal: ${subtotal/100}€</td>
+</tr>`;
 }
 export const log2= (documento) => {
   let fecha=new Date(documento.data().fecha.seconds*1000); //Mágico
@@ -29,8 +31,8 @@ Productos: ${documento.data().productos}
 Propietario:  ${documento.data().propietario} `
 }
 
-export const pintarBien = (id) => {
-  return `<div class="bien">¡Transacción con id ${id} realizada con éxito!</div>`;
+export const pintarProductos = () => {
+  return `<h1>Productos</h1>`;
 };
 
 export const pintarMal = (error) => {
