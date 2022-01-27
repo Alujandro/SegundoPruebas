@@ -65,7 +65,7 @@ const anadeLista= async (nom, prop) =>{
 const borraDoc= async(id) => {
   const borra=await deleteDoc(doc(db, "listas", id));
 }
-//borraDoc("EAxak3jzUiQafS7GXCHx"); //Pasar el id del documento para eliminarlo, usar para borrar la lista de las 22:14
+//borraDoc("EAxak3jzUiQafS7GXCHx"); //Pasar el id del documento para matarlo, usar para borrar la lista de las 22:14
 
 
 //La idea sería que cada lista sea una especie de formulario que se puede modificar siempre y el botón de editar sea un botón de guardar que cambia la base de datos
