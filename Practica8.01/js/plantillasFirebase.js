@@ -17,11 +17,10 @@ export const total= () => {
   let total=0;
   for (let i=0; i<canti.length; i++){
     let nume=canti[i].innerHTML.slice(0,-1);
-    total+=parseFloat(nume)*100;
+    total+=parseFloat(nume)*100; //Esta operación
     //console.log(canti[i].innerHTML);
   }
-  console.log(total);
-  return `<tr><td></td><td></td><td></td><td>Total:</td><td>${total/100}€</td></tr>`
+  return `<tr><td></td><td></td><td></td><td>Total:</td><td>${total/100}€</td></tr>`; //Y esta operación, son para evitar el comportamiento extraño de float
 }
 export const log2= (documento) => {
   let fecha=new Date(documento.data().fecha.seconds*1000); //Mágico
@@ -34,8 +33,4 @@ Propietario:  ${documento.data().propietario} `
 
 export const pintarProductos = () => {
   return `<h1>Productos</h1>`;
-};
-
-export const pintarMal = (error) => {
-  return `<div class="mal">Error al hacer la acción: ${error}.</div>`;
 };

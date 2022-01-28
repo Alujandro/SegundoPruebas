@@ -10,7 +10,21 @@
   <body>
       <h1>Lista de la compra</h1>
     <div id="datos"></div>
-    <div id="informacion"></div>
+    <div id="info">
+      <h3>Filtros: </h3>
+      <form id="opciones">
+        <label for="campo">Campo:</label>
+        <input type="text" id="campo" name="campo" placeholder="nombre"><br>
+        <label for="valor">Valor:</label>
+        <input type="text" id="valor" name="valor" placeholder="patata"><br>
+
+        <input type="radio" id="asc" name="radio" value="asc">
+        <label for="asc">Ascendente</label><br>
+        <input type="radio" id="desc" name="radio" value="desc">
+        <label for="desc">Descendente</label><br><br>
+      </form>
+      <button id="filtrar">Aplicar Filtros</button>
+    </div>
     <script type="module" src="./js/scriptFirebase.js"></script>
   </body>
 </html>

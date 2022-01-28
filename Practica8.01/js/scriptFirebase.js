@@ -19,16 +19,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
 window.onload = () => {
-  let datos = document.getElementById("datos"); // Contenedor de datos.
+  let datos = document.getElementById("datos"); //Div para la salida de datos
+  let opciones = document.getElementById("opciones"); //Div para los opciones de filtrar
 
-  /*** Conexión con la base de datos.
-   * getFirestone   -> Conexión al servicio Firestone.
-   * collection     -> Enlace a la colección de la base de datos.
-   */
   const db = getFirestore(app);
   const productosColeccion = collection(db, "productos"); //Nombre de mi colección
 
-//Obtención de documentos
+//Obtención de productos
   const obtenerListasSnap = async () => {
     const feosDocumentos = await onSnapshot(productosColeccion, (col) => {
       datos.innerHTML = "";
@@ -44,18 +41,61 @@ window.onload = () => {
   };
   obtenerListasSnap();
 
+  //Filtros de productos
+
+  //Filtro general
   const filtrarProductos = async (campo, comparador, valor) => {
+    datos.innerHTML = "";
+    datos.innerHTML+=plantillas.pintarProductos();
+    let tabla=document.createElement("table");
+    tabla.innerHTML="<tr><th>Cantidad</th><th>Nombre</th><th>Peso</th><th>Precio</th><th>Subtotal</th></tr>";
     const consulta = query(
       productosColeccion,
-      where(campo, comparador, valor)  //Consulta que te da todos los productos con valor superior al que se le pasa
+      where(campo, comparador, valor)
     );
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
-      datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
+      tabla.innerHTML += plantillas.pintarFila(documento);
     });
+    datos.appendChild(tabla);
+    tabla.innerHTML+=plantillas.total();
+  };
+  const filtrarProductosAsc = async (campo, comparador, valor) => {
+    datos.innerHTML = "";
+    datos.innerHTML+=plantillas.pintarProductos();
+    let tabla=document.createElement("table");
+    tabla.innerHTML="<tr><th>Cantidad</th><th>Nombre</th><th>Peso</th><th>Precio</th><th>Subtotal</th></tr>";
+    const consulta = query(
+      productosColeccion,
+      where(campo, comparador, valor),
+      orderBy("nombre","asc")
+    );
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
+      tabla.innerHTML += plantillas.pintarFila(documento);
+    });
+    datos.appendChild(tabla);
+    tabla.innerHTML+=plantillas.total();
+  };
+  const filtrarProductosDesc = async (campo, comparador, valor) => {
+    datos.innerHTML = "";
+    datos.innerHTML+=plantillas.pintarProductos();
+    let tabla=document.createElement("table");
+    tabla.innerHTML="<tr><th>Cantidad</th><th>Nombre</th><th>Peso</th><th>Precio</th><th>Subtotal</th></tr>";
+    const consulta = query(
+      productosColeccion,
+      where(campo, comparador, valor),
+      orderBy("nombre", "desc")
+    );
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
+      tabla.innerHTML += plantillas.pintarFila(documento);
+    });
+    datos.appendChild(tabla);
+    tabla.innerHTML+=plantillas.total();
   };
 
+  //Filtros específicos
   const filtrarNombre = async (nombre) => {
     const consulta = query(
       productosColeccion,
@@ -90,5 +130,36 @@ window.onload = () => {
     });
   }
 
+  function pulsar(){
+    let campo=document.getElementById("campo").value.toLowerCase();
+    let valor=document.getElementById("valor").value.toLowerCase();
+    let asc=document.getElementById("asc").checked;
+    let desc=document.getElementById("desc").checked;
+
+    if (campo=="nombre"){
+      filtrarProductos(campo, "==", valor);
+    } else if (campo==""){
+      if (asc){
+        filtrarProductosAsc("nombre", "!=", "-1");
+      } else if (desc){
+        filtrarProductosDesc("nombre","!=", "-1");
+      } else {
+        obtenerListasSnap();
+      }
+    } else {
+      if (asc) {
+        filtrarProductosAsc(campo,"==", valor);
+      } else if (desc) {
+        filtrarProductosDesc(campo, "==", valor);
+      } else {
+        filtrarProductos(campo, "==", valor);
+      }
+    }
+  }
+
+  let cliqueo=document.getElementById("filtrar");
+  cliqueo.addEventListener('click', function (evento){ pulsar() }); //Recibimos la función que se va a ejecutar al hacer clic
+  
+
   //filtrarProductos("peso", ">", 1);
-}; // Fin window.load.
+}; // Fin del programa.
