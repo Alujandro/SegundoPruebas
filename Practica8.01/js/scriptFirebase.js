@@ -104,7 +104,7 @@ window.onload = () => {
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
+      //console.log(plantillas.log(documento));
     });
   }
   const filtrarPrecio = async (precio, comparador) => {
@@ -115,7 +115,7 @@ window.onload = () => {
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
+      //console.log(plantillas.log(documento));
     });
   }
   const filtrarPeso = async (peso, comparador) => {
@@ -126,15 +126,16 @@ window.onload = () => {
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
+      //console.log(plantillas.log(documento));
     });
   }
 
   function pulsar(){
     let campo=document.getElementById("campo").value.toLowerCase();
-    let valor=document.getElementById("valor").value.toLowerCase();
+    let valor=document.getElementById("valor").value;
     let asc=document.getElementById("asc").checked;
     let desc=document.getElementById("desc").checked;
+
 
     if (campo=="nombre"){
       filtrarProductos(campo, "==", valor);
@@ -147,6 +148,11 @@ window.onload = () => {
         obtenerListasSnap();
       }
     } else {
+      if (campo=="precio"){
+        valor=parseFloat(valor);
+      } else {
+        valor=parseInt(valor);
+      }
       if (asc) {
         filtrarProductosAsc(campo,"==", valor);
       } else if (desc) {
