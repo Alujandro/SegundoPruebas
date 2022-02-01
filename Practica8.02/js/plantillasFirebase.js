@@ -1,27 +1,28 @@
 "use strict";
 
-export const pintarFila = (documento) => {
-    let precio=documento.data().precio;
-    let subtotal=precio*(documento.data().cantidad*100);
-  return `<div class="fila"><div class="celda"><img src="./img/tac.png" id="${ documento.id }" width="12px">  ${documento.data().cantidad} 
-  ${documento.data().nombre} 
-  ${documento.data().peso}  
-  ${documento.data().precio}€ 
-  ${subtotal/100}€ </div></div>`;
-};
-
-export const log= (documento) => {
+export const pintarFila= (documento) => {
   let precio=documento.data().precio;
   let subtotal=precio*(documento.data().cantidad*100);
 return `
 <tr id="${documento.id}">
-<td>Cantidad: ${documento.data().cantidad}</td>
-<td>Nombre: ${documento.data().nombre}</td> 
-<td>Peso: ${documento.data().peso}</td>
-<td>Precio:  ${documento.data().precio}€</td> 
-<td>Subtotal: ${subtotal/100}€</td>
+<td class="cantidad">${documento.data().cantidad}</td>
+<td class="nombre">${documento.data().nombre}</td> 
+<td class="peso">${documento.data().peso}</td>
+<td class="precio">${documento.data().precio}€</td> 
+<td class="subtotal">${subtotal/100}€</td>
 </tr>`;
 }
+export const total= () => {
+  let canti=document.getElementsByClassName("subtotal");
+  let total=0;
+  for (let i=0; i<canti.length; i++){
+    let nume=canti[i].innerHTML.slice(0,-1);
+    total+=parseFloat(nume)*100; //Esta operación
+    //console.log(canti[i].innerHTML);
+  }
+  return `<tr><td></td><td></td><td></td><td>Total:</td><td>${total/100}€</td></tr>`; //Y esta operación, son para evitar el comportamiento extraño de float
+}
+
 export const log2= (documento) => {
   let fecha=new Date(documento.data().fecha.seconds*1000); //Mágico
 return `
@@ -30,11 +31,3 @@ Nombre: ${documento.data().nombre}
 Productos: ${documento.data().productos} 
 Propietario:  ${documento.data().propietario} `
 }
-
-export const pintarProductos = () => {
-  return `<h1>Productos</h1>`;
-};
-
-export const pintarMal = (error) => {
-  return `<div class="mal">Error al hacer la acción: ${error}.</div>`;
-};

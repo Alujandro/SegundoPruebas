@@ -20,7 +20,6 @@ import {
 
 window.onload = () => {
   let datos = document.getElementById("datos"); //Div para la salida de datos
-  let opciones = document.getElementById("opciones"); //Div para los opciones de filtrar
 
   const db = getFirestore(app);
   const productosColeccion = collection(db, "productos"); //Nombre de mi colección

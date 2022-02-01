@@ -21,16 +21,12 @@ import {
 window.onload = () => {
   let datos = document.getElementById("datos"); // Contenedor de datos.
 
-  /*** Conexión con la base de datos.
-   * getFirestone   -> Conexión al servicio Firestone.
-   * collection     -> Enlace a la colección de la base de datos.
-   */
   const db = getFirestore(app);
   const productosColeccion = collection(db, "productos"); //Nombre de mi colección
   const listasColeccion = collection(db, "listas");
   const usuariosColeccion = collection(db, "usuarios");
 
-//Introducción a como añadir documentos a una colección, recibe nombre y propietario.
+//Añadir documentos a una colección, recibe nombre y propietario.
 const anadeLista= async (nom, prop) =>{
   let produ=[];
   let fecha=new Date();
@@ -113,7 +109,21 @@ const editDocPrecPro= async(dato, id) => {
       });
     });
   };
-  //obtenerListasSnap(); 
+  //Obtención de productos
+  const obtenerProductoSnap = async () => {
+    const feosDocumentos = await onSnapshot(productosColeccion, (col) => {
+      datos.innerHTML = "";
+      datos.innerHTML+=plantillas.pintarProductos();
+      let tabla=document.createElement("table");
+      tabla.innerHTML="<tr><th>Cantidad</th><th>Nombre</th><th>Peso</th><th>Precio</th><th>Subtotal</th></tr>";
+      col.docs.map((documento) => {
+        tabla.innerHTML+=plantillas.pintarFila(documento);
+      });
+      datos.appendChild(tabla);
+      tabla.innerHTML+=plantillas.total();
+    });
+  };
+  obtenerProductoSnap();
 
   const existeUser = async (user) => {
     let pinchi=false;
