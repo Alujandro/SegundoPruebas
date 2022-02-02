@@ -31,3 +31,11 @@ Nombre: ${documento.data().nombre}
 Productos: ${documento.data().productos} 
 Propietario:  ${documento.data().propietario} `
 }
+
+export const pintarProductos = () => {
+  return `<h1>Productos</h1>`;
+}
+
+export const pintarListas = () => {
+  return '<h1>Listas</h1>';
+}
