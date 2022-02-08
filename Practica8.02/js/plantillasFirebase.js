@@ -12,6 +12,23 @@ return `
 <td class="subtotal">${subtotal/100}€</td>
 </tr>`;
 }
+export const pintarLista= (documento) => {
+  let fecha=new Date(documento.data().fecha.seconds*1000); //Convertimos la fecha en un formato legible
+  return `
+  <table id="${documento.id}">
+  <tr>
+  <td>Propietario: ${documento.data().propietario}</td>
+  <td>Nombre de la lista: ${documento.data().nombre}</td>
+  <td>Propietario: ${documento.data().propietario}</td>
+  <td>Fecha: ${fecha}</td>
+  <td><button class="eliminar">Eliminar</button></td>
+  <td><button class="mostrar">Mostrar</button></td>
+  </tr>
+  </table>
+  <table id="p${documento.id}">
+  </table>
+  `;
+}
 export const total= () => {
   let canti=document.getElementsByClassName("subtotal");
   let total=0;

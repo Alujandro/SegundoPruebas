@@ -24,7 +24,9 @@ window.onload = () => {
   const db = getFirestore(app);
   const productosColeccion = collection(db, "productos"); //Nombre de mi colección
   const listasColeccion = collection(db, "listas");
-  const usuariosColeccion = collection(db, "usuarios");
+  //const usuariosColeccion = collection(db, "usuarios");
+  var listaProductos=[]; //Esta variable es "global", para guardar una lista con todos los productos y usarla para mostrar los productos por pantalla
+  var listaActiva=""; //Esta variable va a guardar el id de la lista que va a ser modificada, esto debería facilitar el trabajo
 
 //Añadir documentos a una colección, recibe nombre y propietario.
 const anadeLista= async (nom, prop) =>{
@@ -38,15 +40,18 @@ const anadeLista= async (nom, prop) =>{
   }
   const archivo=await addDoc(listasColeccion,datoLista);
 }
-//anadeLista("Lista de la Rosalía", "rosalia");  //------------------- Usar para añadir más listas -----------------------------
 
-//Introducción a borrar un documento
-//Borra la lista de la compra completa
-const borraDoc= async(id) => {
-  const borra=await deleteDoc(doc(db, "listas", id));
+//Conseguir lista
+const getLista= async (id) => {
+  const laLista=await getDoc(doc(db, "listas", id));
 }
-//borraDoc("EAxak3jzUiQafS7GXCHx"); //Pasar el id del documento para eliminarlo, usar para borrar la lista de las 22:14
 
+//Borra la lista de la compra completa
+const borraLista= async(id) => {
+  //Añadir un alert para confirmar el borrado de la lista <---------------+++++++++++++++++++############################+++++++++++++++++++------------------<<<<<<<<<<<<<
+  const borra=await deleteDoc(doc(db, "listas", id));
+  document.getElementById(id).remove();
+}
 
 //La idea sería que cada lista sea una especie de formulario que se puede modificar siempre y el botón de editar sea un botón de guardar que cambia la base de datos
 //La idea para obtener estos datos sería obteniendo el id+nombre/id+fecha/id+propietario con getElementById(id+"fecha");
@@ -56,7 +61,7 @@ const editDocNombre= async(dat, id) => {
     nombre: dat
   });
 }
-//editDocNombre("Ramón", "ZZo9MQJV5sZMcxGxP0t1"); //Es perfecto (sería mejor tener lo de listas en una constante, pero ya es tarde), funciona
+
 const editDocFecha= async(dat, id) => {
   const cambia=await updateDoc(doc(db, "listas", id), {
     fecha: dat
@@ -68,13 +73,12 @@ const editDocProductos= async(dat, id) => {
     productos: dat
   });
 }
-//editDocProductos(["prod1","prod2","prod3"],"J2Zjt1dalIczuSXQBsFy");
+
 const editDocPropietario= async(dat, id) => {
   const cambia=await updateDoc(doc(db, "listas", id), {
     propietario: dat
   });
 }
-//editDocPropietario("Santiago","J2Zjt1dalIczuSXQBsFy");
 
 //Funciones para editar producto
 //No confundir con las funciones para editar las listas
@@ -102,29 +106,45 @@ const editDocPrecPro= async(dato, id) => {
 //Obtención de documentos
   const obtenerListasSnap = async () => {
     const feosDocumentos = await onSnapshot(listasColeccion, (col) => {
-      datos.innerHTML = "";
       col.docs.map((documento) => {
         console.log(plantillas.log2(documento));
         console.log("ID: "+documento.id);
       });
     });
   };
+  obtenerListasSnap(); //Para comprobar cómo funciona
+  
   //Obtención de productos
   const obtenerProductoSnap = async () => {
+    listaProductos=[]; //Vaciamos el array de productos
     const feosDocumentos = await onSnapshot(productosColeccion, (col) => {
-      datos.innerHTML = "";
-      datos.innerHTML+=plantillas.pintarProductos();
-      let tabla=document.createElement("table");
-      tabla.innerHTML="<tr><th>Cantidad</th><th>Nombre</th><th>Peso</th><th>Precio</th><th>Subtotal</th></tr>";
       col.docs.map((documento) => {
-        tabla.innerHTML+=plantillas.pintarFila(documento);
+        listaProductos.push(documento); //Llenamos el array con los productos.
       });
-      datos.appendChild(tabla);
-      tabla.innerHTML+=plantillas.total();
     });
   };
-  obtenerProductoSnap();
 
+  //Obtiene una fila de producto lista para imprimir
+  const getProducto = async (id) => {
+    const producto = await getDoc(db, "productos", id);
+    if (producto.exists()){
+      return plantillas.pintarFila(producto);
+    }
+  }
+  
+  //Función que muestra los productos de la lista
+  const muestraProductos = async (id) => {
+    let tablaList=document.getElementById("p"+id);
+    tablaList.innerHTML="";
+    const listado = await getDoc(db, "listas", id);
+    listaProductos=listado.data().productos;
+    listaProductos.forEach(producto => {
+      tablaList.innerHTML+=getProducto(producto);
+    });
+
+  }
+
+//Comprobación de la existencia de usuarios
   const existeUser = async (user) => {
     let pinchi=false;
     const usuarios = await onSnapshot(usuariosColeccion, (use) => {
@@ -136,8 +156,10 @@ const editDocPrecPro= async(dato, id) => {
     });
     return pinchi;
   };
-  const ret=existeUser("rosalia").then(ret => console.log(ret));
+  //const ret=existeUser("rosalia").then(ret => console.log(ret));
 
+
+  //Consultas para filtrar la base de datos
   const filtrarProductos = async (campo, comparador, valor) => {
     const consulta = query(
       productosColeccion,
@@ -184,5 +206,16 @@ const editDocPrecPro= async(dato, id) => {
     });
   }
 
-  //filtrarProductos("peso", ">", 1);
-}; // Fin window.load.
+
+  //Listeners para los botones de eliminar
+  const nuevoEnd=() => {
+    let eliminacion=document.getElementsByClassName("eliminar");
+    let muestras=document.getElementsByClassName("mostrar");
+    eliminacion.forEach(elemento => {
+      elemento.addEventListener("click", borraLista(elemento.parentElement.parentElement.parentElement.id)); //Borra la lista
+    });
+    muestras.forEach(elemento => {
+      elemento.addEventListener("click", muestraProductos(elemento.parentElement.parentElement.parentElement.id)); //Muestra la lista de productos
+    });
+  }
+}; // Fin window.load
