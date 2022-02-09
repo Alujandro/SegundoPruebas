@@ -2,14 +2,13 @@
 
 export const pintarFila= (documento) => {
   let precio=documento.data().precio;
-  let subtotal=precio*(documento.data().cantidad*100);
+  //let subtotal=precio*(documento.data().cantidad*100);
 return `
-<tr id="${documento.id}">
+<tr>
 <td class="cantidad">${documento.data().cantidad}</td>
 <td class="nombre">${documento.data().nombre}</td> 
 <td class="peso">${documento.data().peso}</td>
-<td class="precio">${documento.data().precio}€</td> 
-<td class="subtotal">${subtotal/100}€</td>
+<td class="precio">${documento.data().precio}€</td>
 </tr>`;
 }
 export const pintarLista= (documento) => {

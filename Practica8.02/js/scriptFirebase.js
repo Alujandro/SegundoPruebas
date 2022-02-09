@@ -105,10 +105,14 @@ const editDocPrecPro= async(dato, id) => {
 
 //Obtención de documentos
   const obtenerListasSnap = async () => {
+    let salida=document.getElementById("datos");
     const feosDocumentos = await onSnapshot(listasColeccion, (col) => {
+      salida.innerHTML="";
       col.docs.map((documento) => {
         console.log(plantillas.log2(documento));
         console.log("ID: "+documento.id);
+        salida.innerHTML+=plantillas.pintarLista(documento);
+        nuevoEnd();
       });
     });
   };
@@ -125,21 +129,24 @@ const editDocPrecPro= async(dato, id) => {
   };
 
   //Obtiene una fila de producto lista para imprimir
-  const getProducto = async (id) => {
-    const producto = await getDoc(db, "productos", id);
+  const getProducto = async (id,idTabla) => {
+    let tablaList=document.getElementById("p"+idTabla);
+    const producto = await getDoc(doc(db, "productos", id));
     if (producto.exists()){
-      return plantillas.pintarFila(producto);
+      let escribir=plantillas.pintarFila(producto);
+      tablaList.innerHTML+=escribir;
     }
   }
-  
+
   //Función que muestra los productos de la lista
-  const muestraProductos = async (id) => {
+  const muestraProductos = async (elemento) => {
+    let id=elemento.parentElement.parentElement.parentElement.parentElement.id;
     let tablaList=document.getElementById("p"+id);
     tablaList.innerHTML="";
-    const listado = await getDoc(db, "listas", id);
+    const listado = await getDoc(doc(db, "listas", id));
     listaProductos=listado.data().productos;
     listaProductos.forEach(producto => {
-      tablaList.innerHTML+=getProducto(producto);
+      getProducto(producto,id);
     });
 
   }
@@ -211,11 +218,11 @@ const editDocPrecPro= async(dato, id) => {
   const nuevoEnd=() => {
     let eliminacion=document.getElementsByClassName("eliminar");
     let muestras=document.getElementsByClassName("mostrar");
-    eliminacion.forEach(elemento => {
-      elemento.addEventListener("click", borraLista(elemento.parentElement.parentElement.parentElement.id)); //Borra la lista
-    });
-    muestras.forEach(elemento => {
-      elemento.addEventListener("click", muestraProductos(elemento.parentElement.parentElement.parentElement.id)); //Muestra la lista de productos
-    });
+    for (let elemento of eliminacion) {
+      elemento.addEventListener("click", (e)=>{borraLista(e.parentElement.parentElement.parentElement.id)}); //Borra la lista
+    };
+    for (let elemento of muestras) {
+      elemento.addEventListener("click", (e)=>{muestraProductos(e.target)}); //Muestra la lista de productos
+    };
   }
 }; // Fin window.load
