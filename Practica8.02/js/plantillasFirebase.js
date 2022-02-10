@@ -1,11 +1,10 @@
 "use strict";
 
-export const pintarFila= (documento) => {
+export const pintarFila= (documento,id) => {
   //let precio=documento.data().precio;
   //let subtotal=precio*(documento.data().cantidad*100);
 return `
-<tr id="${documento.id}">
-<td class="cantidad">${documento.data().cantidad}</td>
+<tr id="${documento.id}" class="${id}">
 <td class="nombre">${documento.data().nombre}</td> 
 <td class="peso">${documento.data().peso}Kg</td>
 <td class="precio">${documento.data().precio}€</td>
@@ -26,16 +25,26 @@ export const pintarLista= (documento) => {
   return `
   <table id="${documento.id}" class="productos">
   <tr>
-  <td>Propietario: ${documento.data().propietario}</td>
-  <td>Nombre de la lista: ${documento.data().nombre}</td>
-  <td>Propietario: ${documento.data().propietario}</td>
-  <td>Fecha: ${fecha}</td>
+  <td>${documento.data().nombre}</td>
+  <td>${documento.data().propietario}</td>
+  <td>${fecha}</td>
   </tr>
   <tr>
   <td colspan="3"><button class="eliminar">Eliminar</button><button class="masProd">Agregar Productos</button><button class="mostrar">Mostrar</button></td>
   </tr>
   </table>
   <table id="p${documento.id}">
+  </table>
+  `;
+}
+export const cabeceraLista= () => {
+  return `
+  <table>
+  <tr>
+  <th>Nombre de la lista</th>
+  <th>Propietario</th>
+  <th>Fecha</th>
+  </tr>
   </table>
   `;
 }

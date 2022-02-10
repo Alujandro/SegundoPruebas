@@ -26,7 +26,7 @@ window.onload = () => {
   const listasColeccion = collection(db, "listas");
   //const usuariosColeccion = collection(db, "usuarios");
   var listaProductos=[]; //Esta variable es "global", para guardar una lista con todos los productos y usarla para mostrar los productos por pantalla
-  var listaActiva=""; //Esta variable va a guardar el id de la lista que va a ser modificada, esto debería facilitar el trabajo
+  var listaActiva=null; //Esta variable va a guardar el id de la lista que va a ser modificada, esto debería facilitar el trabajo
 
 //Añadir documentos a una colección, recibe nombre y propietario.
 const anadeLista= async (nom, prop) =>{
@@ -69,19 +69,27 @@ const editDocFecha= async(dat, id) => {
     fecha: dat
   });
 }
-//Esto lo usaría para tanto añadir como editar productos
+//Editar array de productos
 const editDocProductos= async(dat, id) => {
   const cambia=await updateDoc(doc(db, "listas", id), {
     productos: dat
   });
 }
 const borraProducto= (elemento) => {
-  let id=elemento.parentElement.parentElement.id;
+  muestraProductos(listaActiva);
+  let id=elemento.parentElement.parentElement.className;
   let index = listaProductos.indexOf(id);
   if (index !== -1) {
     listaProductos.splice(index, 1);
   }
-  editDocProductos(listaProductos,id);
+  editDocProductos(listaProductos,listaActiva);
+}
+const incrementaProducto= (elemento) => {
+  muestraProductos(listaActiva);
+  let id=elemento.parentElement.className;
+  console.log(id);
+  listaProductos.push(id);
+  editDocProductos(listaProductos,listaActiva);
 }
 
 const editDocPropietario= async(dat, id) => {
@@ -114,11 +122,24 @@ const editDocPrecPro= async(dato, id) => {
 }
 
 //Obtención de documentos
+  const obtenerProductos = async ()=> {
+    let salida=document.getElementById("informacion");
+    salida.innerHTML="";
+    const promesa = await onSnapshot(productosColeccion, (col) => {
+      salida.appendChild(document.createElement("table"));
+      salida.firstChild.className="agregaproducto";
+      col.docs.map((documento) => {
+        salida.firstChild.innerHTML+=plantillas.pintaProducto(documento);
+      });
+      anadeListener();
+    });
+  }
   const obtenerListasSnap = async () => {
     let salida=document.getElementById("datos");
     const promesa = await onSnapshot(listasColeccion, (col) => {
       salida.innerHTML="";
       col.docs.map((documento) => {
+        salida.innerHTML+=plantillas.cabeceraLista();
         salida.innerHTML+=plantillas.pintarLista(documento);
       });
       nuevoEnd();
@@ -127,7 +148,7 @@ const editDocPrecPro= async(dato, id) => {
   obtenerListasSnap(); //Para comprobar cómo funciona
 
   const obtenerLista = async (id) => {
-    let salida=document.getElementById("datos");
+    let salida=document.getElementById("informacion");
     let tabla=document.createElement("table");
     tabla.className="prodList";
     salida.innerHTML="";
@@ -137,8 +158,9 @@ const editDocPrecPro= async(dato, id) => {
 
   }
   const addProds = (id) => {
-    obtenerLista(id);
+    //obtenerLista(id);
     muestraProductos(id);
+    obtenerProductos();
   }
   
   //Obtención de productos
@@ -162,17 +184,19 @@ const editDocPrecPro= async(dato, id) => {
     }
     const producto = await getDoc(doc(db, "productos", id));
     if (producto.exists()){
-      let escribir=plantillas.pintarFila(producto);
+      let escribir=plantillas.pintarFila(producto,id);
       tablaList.innerHTML+=escribir;
     }
     if (nohay){
       let salida=document.getElementById("datos");
       salida.appendChild(tablaList);
     }
+    borrarListener();
   }
 
   //Función que muestra los productos de la lista
   const muestraProductos = async (id) => {
+    listaActiva=id;
     let tablaList=document.getElementById("p"+id);
     if (tablaList!=null){
       tablaList.innerHTML="";
@@ -182,6 +206,11 @@ const editDocPrecPro= async(dato, id) => {
     listaProductos.forEach(producto => {
       getProducto(producto,id);
     });
+  }
+  const ocultaProductos = async (id) => {
+    listaActiva=null;
+    let tablaList=document.getElementById("p"+id);
+    tablaList.innerHTML="";
   }
 
 //Comprobación de la existencia de usuarios
@@ -247,21 +276,42 @@ const editDocPrecPro= async(dato, id) => {
   //Listeners para los botones de eliminar
   const nuevoEnd=() => {
     let eliminacion=document.getElementsByClassName("eliminar");
-    let borrado=document.getElementsByClassName("borrar");
     let muestras=document.getElementsByClassName("mostrar");
     let increm=document.getElementsByClassName("masProd");
-    console.log(increm);
     for (let elemento of eliminacion) {
       elemento.addEventListener("click", (e)=>{borraLista(e.target)}); //Borra la lista
     };
     for (let elemento of muestras) {
-      elemento.addEventListener("click", (e)=>{muestraProductos(e.target.parentElement.parentElement.parentElement.parentElement.id)}); //Muestra la lista de productos
+      elemento.addEventListener("click", (e)=>{
+        if (e.target.innerHTML=="Mostrar"){
+          muestraProductos(e.target.parentElement.parentElement.parentElement.parentElement.id);
+          e.target.innerHTML="Ocultar";
+        } else {
+          ocultaProductos(e.target.parentElement.parentElement.parentElement.parentElement.id);
+          e.target.innerHTML="Mostrar";
+        }
+        
+      }); //Muestra la lista de productos
     };
-    for (let elemento of borrado) {
-      elemento.addEventListener("click", (e)=>{borraProducto(e.target)}); //Elimina el producto de la lista de la compra
-    };
+    
     for (let elemento of increm) {
-      elemento.addEventListener("click", (e)=>{addProds(e.target.parentElement.parentElement.parentElement.parentElement.id);}); //Pasa al menú de añadir productos
+      elemento.addEventListener("click", (e)=>{addProds(e.target.parentElement.parentElement.parentElement.parentElement.id);
+      e.target.nextSibling.innerHTML="Ocultar"}); //Pasa al menú de añadir productos
+    };
+  }
+
+  //Le añade los listeners a la lista de productos que añadir a la lista
+  const anadeListener=() => {
+    let aum=document.getElementsByClassName("increm");
+    console.log(aum);
+    for (let elemento of aum) {
+      elemento.addEventListener("click", (e)=>{incrementaProducto(e.target);}); //Pasa al menú de añadir productos
+    };
+  }
+  const borrarListener=() => {
+    let borrado=document.getElementsByClassName("borrar");
+    for (let elemento of borrado) {
+      elemento.addEventListener("click", (e)=>{borraProducto(e.target);}); //Pasa al menú de añadir productos
     };
   }
 }; // Fin window.load
