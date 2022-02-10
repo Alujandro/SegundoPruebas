@@ -47,14 +47,16 @@ const getLista= async (id) => {
 }
 
 //Borra la lista de la compra completa
-const borraLista= async(id) => {
-  //Añadir un alert para confirmar el borrado de la lista <---------------+++++++++++++++++++############################+++++++++++++++++++------------------<<<<<<<<<<<<<
-  const borra=await deleteDoc(doc(db, "listas", id));
-  document.getElementById(id).remove();
+const borraLista= async(elemento) => {
+  let id=elemento.parentElement.parentElement.parentElement.parentElement.id;
+  let confirmacion=confirm("¿Seguro que quieres borrar la lista?");
+  if (confirmacion){
+    const borra=await deleteDoc(doc(db, "listas", id));
+    document.getElementById(id).remove();
+    alert("Lista borrada con éxito");
+  }
 }
 
-//La idea sería que cada lista sea una especie de formulario que se puede modificar siempre y el botón de editar sea un botón de guardar que cambia la base de datos
-//La idea para obtener estos datos sería obteniendo el id+nombre/id+fecha/id+propietario con getElementById(id+"fecha");
 //Funciones para editar las listas
 const editDocNombre= async(dat, id) => {
   const cambia=await updateDoc(doc(db, "listas", id), {
@@ -72,6 +74,14 @@ const editDocProductos= async(dat, id) => {
   const cambia=await updateDoc(doc(db, "listas", id), {
     productos: dat
   });
+}
+const borraProducto= (elemento) => {
+  let id=elemento.parentElement.parentElement.id;
+  let index = listaProductos.indexOf(id);
+  if (index !== -1) {
+    listaProductos.splice(index, 1);
+  }
+  editDocProductos(listaProductos,id);
 }
 
 const editDocPropietario= async(dat, id) => {
@@ -106,22 +116,35 @@ const editDocPrecPro= async(dato, id) => {
 //Obtención de documentos
   const obtenerListasSnap = async () => {
     let salida=document.getElementById("datos");
-    const feosDocumentos = await onSnapshot(listasColeccion, (col) => {
+    const promesa = await onSnapshot(listasColeccion, (col) => {
       salida.innerHTML="";
       col.docs.map((documento) => {
-        console.log(plantillas.log2(documento));
-        console.log("ID: "+documento.id);
         salida.innerHTML+=plantillas.pintarLista(documento);
-        nuevoEnd();
       });
+      nuevoEnd();
     });
   };
   obtenerListasSnap(); //Para comprobar cómo funciona
+
+  const obtenerLista = async (id) => {
+    let salida=document.getElementById("datos");
+    let tabla=document.createElement("table");
+    tabla.className="prodList";
+    salida.innerHTML="";
+    const promesa = await getDoc(doc(db,"listas", id));
+    tabla.innerHTML= plantillas.pintarLista(promesa);
+    salida.appendChild(tabla);
+
+  }
+  const addProds = (id) => {
+    obtenerLista(id);
+    muestraProductos(id);
+  }
   
   //Obtención de productos
   const obtenerProductoSnap = async () => {
     listaProductos=[]; //Vaciamos el array de productos
-    const feosDocumentos = await onSnapshot(productosColeccion, (col) => {
+    const promesa = await onSnapshot(productosColeccion, (col) => {
       col.docs.map((documento) => {
         listaProductos.push(documento); //Llenamos el array con los productos.
       });
@@ -130,25 +153,35 @@ const editDocPrecPro= async(dato, id) => {
 
   //Obtiene una fila de producto lista para imprimir
   const getProducto = async (id,idTabla) => {
+    let nohay=false;
     let tablaList=document.getElementById("p"+idTabla);
+    if (tablaList==null){
+      tablaList=document.createElement("table");
+      tablaList.id="p"+idTabla;
+      nohay=true;
+    }
     const producto = await getDoc(doc(db, "productos", id));
     if (producto.exists()){
       let escribir=plantillas.pintarFila(producto);
       tablaList.innerHTML+=escribir;
     }
+    if (nohay){
+      let salida=document.getElementById("datos");
+      salida.appendChild(tablaList);
+    }
   }
 
   //Función que muestra los productos de la lista
-  const muestraProductos = async (elemento) => {
-    let id=elemento.parentElement.parentElement.parentElement.parentElement.id;
+  const muestraProductos = async (id) => {
     let tablaList=document.getElementById("p"+id);
-    tablaList.innerHTML="";
+    if (tablaList!=null){
+      tablaList.innerHTML="";
+    }
     const listado = await getDoc(doc(db, "listas", id));
     listaProductos=listado.data().productos;
     listaProductos.forEach(producto => {
       getProducto(producto,id);
     });
-
   }
 
 //Comprobación de la existencia de usuarios
@@ -175,7 +208,6 @@ const editDocPrecPro= async(dato, id) => {
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
     });
   };
 
@@ -187,7 +219,6 @@ const editDocPrecPro= async(dato, id) => {
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
     });
   }
   const filtrarPrecio = async (precio, comparador) => {
@@ -198,7 +229,6 @@ const editDocPrecPro= async(dato, id) => {
     const productosFiltrados = await getDocs(consulta);
     productosFiltrados.docs.map((documento) => {
       datos.innerHTML += plantillas.pintarFila(documento);
-      console.log(plantillas.log(documento));
     });
   }
   const filtrarPeso = async (peso, comparador) => {
@@ -217,12 +247,21 @@ const editDocPrecPro= async(dato, id) => {
   //Listeners para los botones de eliminar
   const nuevoEnd=() => {
     let eliminacion=document.getElementsByClassName("eliminar");
+    let borrado=document.getElementsByClassName("borrar");
     let muestras=document.getElementsByClassName("mostrar");
+    let increm=document.getElementsByClassName("masProd");
+    console.log(increm);
     for (let elemento of eliminacion) {
-      elemento.addEventListener("click", (e)=>{borraLista(e.parentElement.parentElement.parentElement.id)}); //Borra la lista
+      elemento.addEventListener("click", (e)=>{borraLista(e.target)}); //Borra la lista
     };
     for (let elemento of muestras) {
-      elemento.addEventListener("click", (e)=>{muestraProductos(e.target)}); //Muestra la lista de productos
+      elemento.addEventListener("click", (e)=>{muestraProductos(e.target.parentElement.parentElement.parentElement.parentElement.id)}); //Muestra la lista de productos
+    };
+    for (let elemento of borrado) {
+      elemento.addEventListener("click", (e)=>{borraProducto(e.target)}); //Elimina el producto de la lista de la compra
+    };
+    for (let elemento of increm) {
+      elemento.addEventListener("click", (e)=>{addProds(e.target.parentElement.parentElement.parentElement.parentElement.id);}); //Pasa al menú de añadir productos
     };
   }
 }; // Fin window.load

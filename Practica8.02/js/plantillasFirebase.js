@@ -1,27 +1,38 @@
 "use strict";
 
 export const pintarFila= (documento) => {
-  let precio=documento.data().precio;
+  //let precio=documento.data().precio;
   //let subtotal=precio*(documento.data().cantidad*100);
 return `
-<tr>
+<tr id="${documento.id}">
 <td class="cantidad">${documento.data().cantidad}</td>
 <td class="nombre">${documento.data().nombre}</td> 
-<td class="peso">${documento.data().peso}</td>
+<td class="peso">${documento.data().peso}Kg</td>
 <td class="precio">${documento.data().precio}€</td>
+<td><button class="borrar">Eliminar</button></td>
 </tr>`;
 }
+export const pintaProducto=(documento) => {
+  return `<tr>
+  <td class="nombre">${documento.data().nombre}</td> 
+  <td class="peso">${documento.data().peso}Kg</td>
+  <td class="precio">${documento.data().precio}€</td>
+  <td class="${documento.id}"><button class="increm">Añadir</button></td>
+  </tr>`;
+}
+
 export const pintarLista= (documento) => {
   let fecha=new Date(documento.data().fecha.seconds*1000); //Convertimos la fecha en un formato legible
   return `
-  <table id="${documento.id}">
+  <table id="${documento.id}" class="productos">
   <tr>
   <td>Propietario: ${documento.data().propietario}</td>
   <td>Nombre de la lista: ${documento.data().nombre}</td>
   <td>Propietario: ${documento.data().propietario}</td>
   <td>Fecha: ${fecha}</td>
-  <td><button class="eliminar">Eliminar</button></td>
-  <td><button class="mostrar">Mostrar</button></td>
+  </tr>
+  <tr>
+  <td colspan="3"><button class="eliminar">Eliminar</button><button class="masProd">Agregar Productos</button><button class="mostrar">Mostrar</button></td>
   </tr>
   </table>
   <table id="p${documento.id}">
@@ -36,7 +47,7 @@ export const total= () => {
     total+=parseFloat(nume)*100; //Esta operación
     //console.log(canti[i].innerHTML);
   }
-  return `<tr><td></td><td></td><td></td><td>Total:</td><td>${total/100}€</td></tr>`; //Y esta operación, son para evitar el comportamiento extraño de float
+  return `<tr><td></td><td></td><td></td><td>Total:</td><td>${total/100}€</td></tr>`; //Y esta operación, es para evitar el comportamiento extraño de float
 }
 
 export const log2= (documento) => {
@@ -54,4 +65,16 @@ export const pintarProductos = () => {
 
 export const pintarListas = () => {
   return '<h1>Listas</h1>';
+}
+
+export const pintaListaForm = () => {
+  return `
+  <form>
+    <label for="nombre">Nombre de la lista: </label><br>
+    <input type="text" id="nombre" name="nombre" placeholder="nombre"><br>
+    <label for="propietario">Nombre del propietario: </label><br>
+    <input type="text" id="propietario" name="propietario" placeholder="propietario"><br>
+  </form> 
+  <button id="addLista">Guardar Lista</button>
+  `;
 }
