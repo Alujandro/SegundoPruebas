@@ -27,7 +27,7 @@ export const pintarLista= (documento) => {
   <tr>
   <td>${documento.data().nombre}</td>
   <td>${documento.data().propietario}</td>
-  <td>${fecha}</td>
+  <td>${fecha.toISOString()}</td>
   </tr>
   <tr>
   <td colspan="3"><button class="eliminar">Eliminar</button><button class="masProd">Agregar Productos</button><button class="mostrar">Mostrar</button></td>
@@ -62,7 +62,7 @@ export const total= () => {
 export const log2= (documento) => {
   let fecha=new Date(documento.data().fecha.seconds*1000); //Mágico
 return `
-Fecha: ${fecha} 
+Fecha: ${fecha.toISOString()} 
 Nombre: ${documento.data().nombre} 
 Productos: ${documento.data().productos} 
 Propietario:  ${documento.data().propietario} `

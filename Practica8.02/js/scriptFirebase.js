@@ -39,6 +39,14 @@ const anadeLista= async (nom, prop) =>{
     propietario: prop
   }
   const archivo=await addDoc(listasColeccion,datoLista);
+  document.getElementById("informacion").innerHTML="Lista creada satisfactoriamente";
+}
+const sendLista= () =>{
+  let nome=document.getElementById("nombre");
+  let propi=document.getElementById("propietario");
+  anadeLista(nome.value,propi.value);
+  nome.value="";
+  propi.value="";
 }
 
 //Conseguir lista
@@ -135,6 +143,8 @@ const editDocPrecPro= async(dato, id) => {
     });
   }
   const obtenerListasSnap = async () => {
+    document.getElementById("informacion").innerHTML="";
+    document.getElementById("titulo").innerHTML="Listas de la compra";
     let salida=document.getElementById("datos");
     const promesa = await onSnapshot(listasColeccion, (col) => {
       salida.innerHTML="";
@@ -145,7 +155,6 @@ const editDocPrecPro= async(dato, id) => {
       nuevoEnd();
     });
   };
-  obtenerListasSnap(); //Para comprobar cómo funciona
 
   const obtenerLista = async (id) => {
     let salida=document.getElementById("informacion");
@@ -272,6 +281,16 @@ const editDocPrecPro= async(dato, id) => {
     });
   }
 
+  //Esta parte se ocupa del comportamiento del botón de añadir lista
+  const formListas=() => {
+    document.getElementById("titulo").innerHTML="Nueva lista";
+    document.getElementById("datos").innerHTML="";
+    let salida=document.getElementById("informacion");
+    salida.innerHTML=plantillas.pintaListaForm();
+    agregaLista();
+
+  }
+
 
   //Listeners para los botones de eliminar
   const nuevoEnd=() => {
@@ -314,4 +333,15 @@ const editDocPrecPro= async(dato, id) => {
       elemento.addEventListener("click", (e)=>{borraProducto(e.target);}); //Pasa al menú de añadir productos
     };
   }
+  const agregaLista= () => {
+    let nuelista=document.getElementById("addLista");
+    nuelista.addEventListener("click", (e)=>{sendLista();});
+  }
+  const listeCabecera=() => {
+    let mostra=document.getElementById("muestraLista");
+    let anadir=document.getElementById("listaNueva");
+    mostra.addEventListener("click", obtenerListasSnap);
+    anadir.addEventListener("click", formListas);
+  }
+  listeCabecera();
 }; // Fin window.load
