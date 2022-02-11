@@ -1,38 +1,106 @@
 "use strict";
 
-export const pintarFila = (documento) => {
-    let precio=documento.data().precio;
-    let subtotal=precio*(documento.data().cantidad*100);
-  return `<div class="fila"><div class="celda"><img src="./img/tac.png" id="${ documento.id }" width="12px">  ${documento.data().cantidad} 
-  ${documento.data().nombre} 
-  ${documento.data().peso}  
-  ${documento.data().precio}€ 
-  ${subtotal/100}€ </div></div>`;
-};
-
-export const log= (documento) => {
-  let precio=documento.data().precio;
-  let subtotal=precio*(documento.data().cantidad*100);
+export const pintarFila= (documento,id) => {
+  //let precio=documento.data().precio;
+  //let subtotal=precio*(documento.data().cantidad*100);
 return `
-Cantidad: ${documento.data().cantidad} 
-Nombre: ${documento.data().nombre} 
-Peso: ${documento.data().peso} 
-Precio:  ${documento.data().precio}€ 
-Subtotal: ${subtotal/100}€`;
+<tr id="${documento.id}" class="${id}">
+<td class="nombre">${documento.data().nombre}</td> 
+<td class="peso">${documento.data().peso}Kg</td>
+<td class="precio">${documento.data().precio}€</td>
+<td><button class="borrar">Eliminar</button></td>
+</tr>`;
 }
+export const pintaProducto=(documento) => {
+  return `<tr>
+  <td class="nombre">${documento.data().nombre}</td> 
+  <td class="peso">${documento.data().peso}Kg</td>
+  <td class="precio">${documento.data().precio}€</td>
+  <td class="${documento.id}"><button class="increm">Añadir</button></td>
+  </tr>`;
+}
+
+export const pintarLista= (documento) => {
+  let fecha=new Date(documento.data().fecha.seconds*1000); //Convertimos la fecha en un formato legible
+  return `
+  <table id="${documento.id}" class="productos">
+  <tr>
+  <td>${documento.data().nombre}</td>
+  <td>${documento.data().propietario}</td>
+  <td>${fecha.toISOString().substring(0,10)}</td>
+  </tr>
+  <tr>
+  <td colspan="3"><button class="eliminar">Eliminar</button><button class="masProd">Agregar Productos</button><button class="mostrar">Mostrar</button></td>
+  </tr>
+  </table>
+  <table id="p${documento.id}">
+  </table>
+  `;
+}
+export const cabeceraLista= () => {
+  return `
+  <table>
+  <tr>
+  <th>Nombre de la lista</th>
+  <th>Propietario</th>
+  <th>Fecha</th>
+  </tr>
+  </table>
+  `;
+}
+export const total= () => {
+  let canti=document.getElementsByClassName("subtotal");
+  let total=0;
+  for (let i=0; i<canti.length; i++){
+    let nume=canti[i].innerHTML.slice(0,-1);
+    total+=parseFloat(nume)*100; //Esta operación
+    //console.log(canti[i].innerHTML);
+  }
+  return `<tr><td></td><td></td><td></td><td>Total:</td><td>${total/100}€</td></tr>`; //Y esta operación, es para evitar el comportamiento extraño de float
+}
+
 export const log2= (documento) => {
   let fecha=new Date(documento.data().fecha.seconds*1000); //Mágico
 return `
-Fecha: ${fecha} 
+Fecha: ${fecha.toISOString().substring(0,10)} 
 Nombre: ${documento.data().nombre} 
 Productos: ${documento.data().productos} 
 Propietario:  ${documento.data().propietario} `
 }
 
-export const pintarBien = (id) => {
-  return `<div class="bien">¡Transacción con id ${id} realizada con éxito!</div>`;
-};
+export const pintarProductos = () => {
+  return `<h1>Productos</h1>`;
+}
 
-export const pintarMal = (error) => {
-  return `<div class="mal">Error al hacer la acción: ${error}.</div>`;
-};
+export const pintarListas = () => {
+  return '<h1>Listas</h1>';
+}
+
+export const pintaListaForm = () => {
+  return `
+  <form>
+    <label for="nombre">Nombre de la lista: </label><br>
+    <input type="text" id="nombre" name="nombre" placeholder="Nombre"><br>
+    <label for="propietario">Nombre del propietario: </label><br>
+    <input type="text" id="propietario" name="propietario" placeholder="Propietario"><br>
+  </form> 
+  <button id="addLista">Guardar Lista</button>
+  `;
+}
+export const pintaLoginForm = () => {
+  return `
+  <form>
+    <label for="nombre">Nombre de usuario: </label>
+    <input type="text" id="nombre" name="nombre" placeholder="Nombre"><br>
+    <label for="contras">Contraseña: </label><br>
+    <input type="password" id="contras" name="contras" placeholder="Contraseña"><br>
+  </form> 
+  <button id="logueo">Guardar Lista</button>
+  `;
+}
+export const botAcciones = () => {
+  return `
+    <button id="muestraLista">Mostrar Listas</button>
+    <button id="listaNueva">Añadir Listas</button>
+  `;
+}
