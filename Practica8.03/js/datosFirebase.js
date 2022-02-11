@@ -1,10 +1,10 @@
 "use strict";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 //Autentificación de base de datos
-export const auth = getAuth();
+//export const auth = getAuth();
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,7 +20,9 @@ const firebaseConfig = {
   measurementId: "G-1R1Q0JM47N"
 };
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export {app};
+const autentico = getAuth(app);
+export {app, autentico};
 //const analytics = getAnalytics(app);

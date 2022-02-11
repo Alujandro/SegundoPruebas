@@ -1,8 +1,8 @@
 "use strict";
 
 import * as plantillas from "./plantillasFirebase.js";
-import { app } from "./datosFirebase.js";
-import { auth } from "./datosFirebase.js";
+import { app, autentico } from "./datosFirebase.js";
+//import { auth } from "./datosFirebase.js";
 import {
   getFirestore,
   collection,
@@ -18,6 +18,12 @@ import {
   orderBy,
   limit,
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
 
 window.onload = () => {
@@ -31,39 +37,53 @@ window.onload = () => {
   var listaActiva=null; //Esta variable va a guardar el id de la lista que va a ser modificada, esto debería facilitar el trabajo
 
   //Crear usuario
-  function creaUser(){
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+  const creaUser=(email, password, nombre) => {
+    createUserWithEmailAndPassword(autentico, email, password)
+    .then((dataUser) => {
       // Signed in
-      var user = userCredential.user;
-      muestraProductos();
+      const user = dataUser.user;
+      //Cambia el displayName
+      return dataUser.user.updateProfile({
+        displayName: nombre
+      });
       // ...
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      console.log(error);
+      const errorCode = error.code;
+      const errorMessage = error.message;
       // ..
     });
   }
   //Login de usuario
-  function logIn(email, password){
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+  const logIn=(email, password) => {
+    signInWithEmailAndPassword(autentico, email, password)
+    .then((dataUser) => {
       // Signed in
-      var user = userCredential.user;
-      muestraProductos();
+      console.log(dataUser.user);
+      console.log(dataUser.user);
       // ...
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      console.log("Error: usuario o contraseña incorrectos");
+      const errorCode = error.code;
+      const errorMessage = error.message;
     });
   }
+  onAuthStateChanged(autentico, (usuario) => {
+    if (usuario) {
+      console.log(usuario.uid);
+      //A partir de aquí introducir el código que muestra la pantalla iniciada
+      console.log(usuario.email);
+      filtrarListas("propietario","==","Carlos");
+    } else {
+      console.log("No se ha iniciado sesión");
+    }
+  });
   //Logout de usuario
-  function logOut(){
-    firebase.auth().signOut().then(() => {
+  const logOut=() =>{
+    signOut(autentico).then(() => {
       // Sign-out successful.
-      inicio();
     }).catch((error) => {
       // An error happened.
     });
@@ -185,6 +205,8 @@ const editDocPrecPro= async(dato, id) => {
       anadeListener();
     });
   }
+
+  //Obtención de todas las listas
   const obtenerListasSnap = async () => {
     document.getElementById("informacion").innerHTML="";
     document.getElementById("titulo").innerHTML="Listas de la compra";
@@ -198,6 +220,23 @@ const editDocPrecPro= async(dato, id) => {
       nuevoEnd();
     });
   };
+  const filtrarListas = async (campo, comparador, valor) => {
+    const consulta = query(
+      listasColeccion,
+      where(campo, comparador, valor)  //Consulta que te da todos los productos con valor superior al que se le pasa
+    );
+    const productosFiltrados = await getDocs(consulta);
+    productosFiltrados.docs.map((documento) => {
+      /*
+      datos.innerHTML += plantillas.pintarFila(documento);
+      salida.innerHTML+=plantillas.cabeceraLista();
+      salida.innerHTML+=plantillas.pintarLista(documento);
+      */
+      console.log(plantillas.pintarFila(documento));
+    });
+    nuevoEnd();
+  };
+  //Prueba de filtrarListas
 
   const obtenerLista = async (id) => {
     let salida=document.getElementById("informacion");
@@ -278,7 +317,6 @@ const editDocPrecPro= async(dato, id) => {
     });
     return pinchi;
   };
-  //const ret=existeUser("rosalia").then(ret => console.log(ret));
 
 
   //Consultas para filtrar la base de datos
@@ -339,6 +377,13 @@ const editDocPrecPro= async(dato, id) => {
   const inicio=() => {
     document.getElementById("titulo").innerHTML="";
     document.getElementById("acciones").innerHTML=plantillas.pintaLoginForm();
+    let boton=document.createElement("button");
+    let bot2=document.createElement("button");
+    boton.id="logueo";
+    bot2.id="crear";
+    boton.innerHTML="Iniciar sesión";
+    bot2.innerHTML="Crear cuenta";
+    document.getElementById("acciones").appendChild(boton);
     loginListener();
   }
 
@@ -395,12 +440,16 @@ const editDocPrecPro= async(dato, id) => {
     anadir.addEventListener("click", formListas);
   }
   const loginListener=() => {
-    let logear=document.getElementById("logeo");
+    let logear=document.getElementById("logueo");
+    let creacion=document.getElementById("crear");
     logear.addEventListener("click", (e)=>{
-      let nom=document.getElementById("nombre");
-      let pas=document.getElementById("contras");
+      let nom=document.getElementById("nombre").value;
+      let pas=document.getElementById("contras").value;
       logIn(nom,pas);
     });
+    creacion.addEventListener("click", (e)=>{
+      //Llamar a la funcion que cambia la pantalla para que salga el formulario de crear cuenta
+    })
   }
   inicio();
 }; // Fin window.load

@@ -92,10 +92,9 @@ export const pintaLoginForm = () => {
   <form>
     <label for="nombre">Nombre de usuario: </label>
     <input type="text" id="nombre" name="nombre" placeholder="Nombre"><br>
-    <label for="contras">Contraseña: </label><br>
+    <label for="contras">Contraseña: </label>
     <input type="password" id="contras" name="contras" placeholder="Contraseña"><br>
-  </form> 
-  <button id="logueo">Guardar Lista</button>
+  </form>
   `;
 }
 export const botAcciones = () => {
