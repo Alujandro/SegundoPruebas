@@ -1,0 +1,123 @@
+/* Colores */
+/* Aquí he guardado todas las variables que he creído podrían llegar a cambiarse con frecuencia */
+/* Mixins */
+/* Este mixin pensaba reutilizarlo, pero como lo he usado agrupado, sólo lo he usado una vez */
+.forma {
+  margin: 10px;
+  padding: 10px;
+}
+/* No he usado ninguna función aritmética porque al tener todo con porcentajes no les he encontrado ningún uso */
+/* CSS */
+header,
+select,
+ul,
+nav,
+article,
+footer {
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+}
+header {
+  background-color: violet;
+}
+select {
+  display: none;
+  background-color: deeppink;
+}
+ul {
+  background-color: deeppink;
+  padding-left: 20px;
+  list-style: none;
+}
+article {
+  background-color: orangered;
+  color: white;
+}
+footer {
+  background-color: dodgerblue;
+  float: center;
+  clear: both;
+}
+/* Estilo para un estilo mayor a 1366px, no he usado variables ni mixins porque no me ha parecido conveniente */
+@media (min-width: 1366px) {
+  nav {
+    width: 12%;
+    float: left;
+  }
+  section {
+    float: left;
+    width: 85%;
+  }
+  article {
+    float: left;
+    width: 27%;
+  }
+}
+/* Estilo para un ancho entre 1366 y 936px, en este caso no he usado variables porque no he visto la necesidad */
+@media (max-width: 1366px) and (min-width: 936px) {
+  nav {
+    width: 20%;
+    float: left;
+  }
+  section {
+    float: left;
+    max-width: 80%;
+  }
+  article {
+    float: left;
+    width: 40%;
+  }
+}
+/* Estilo para un ancho entre 936 y 600px, en este caso no he usado variables porque no he visto la necesisdad */
+@media (max-width: 936px) and (min-width: 600px) {
+  nav {
+    width: 30%;
+    float: left;
+  }
+  section {
+    float: left;
+    width: 70%;
+  }
+  article {
+    float: left;
+    width: 80%;
+  }
+}
+/* Estilo para un ancho entre 600 y 480px */
+@media (max-width: 600px) and (min-width: 480px) {
+  nav {
+    background-color: deeppink;
+    margin: 10px;
+  }
+  ul {
+    display: none;
+  }
+  select {
+    display: inline;
+    background-color: white;
+  }
+  section {
+    float: left;
+  }
+  article {
+    float: left;
+  }
+}
+/* Estilo para un ancho menor a 480px */
+@media (max-width: 480px) {
+  nav {
+    background-color: deeppink;
+    margin: 10px;
+  }
+  select {
+    display: inline;
+    background-color: white;
+  }
+  ul {
+    display: none;
+  }
+  h2 {
+    display: none;
+  }
+}

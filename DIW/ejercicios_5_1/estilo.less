@@ -1,0 +1,129 @@
+/* Colores */
+/* Aquí he guardado todas las variables que he creído podrían llegar a cambiarse con frecuencia */
+@headercolor: violet;
+@navcolor: deeppink;
+@articlecolor: orangered;
+@footercolor: dodgerblue;
+@selectcolor: white;
+@articleletras: white;
+@marginbase: 10px;
+@paddingbase: 10px;
+@radiusbase: 10px;
+
+/* Mixins */
+/* Este mixin pensaba reutilizarlo, pero como lo he usado agrupado, sólo lo he usado una vez */
+.forma {
+    margin: @marginbase;
+    padding: @paddingbase;
+}
+/* No he usado ninguna función aritmética porque al tener todo con porcentajes no les he encontrado ningún uso */
+/* CSS */
+header, select, ul, nav, article, footer{
+    border-radius: @radiusbase;
+    .forma;
+}
+header {
+    background-color: @headercolor;
+}
+select {
+    display: none;
+    background-color: @navcolor;
+}
+ul {
+    background-color: @navcolor;
+    padding-left: 20px;
+    list-style: none;
+}
+article {
+    background-color: @articlecolor;
+    color: @articleletras;
+}
+footer {
+    background-color: @footercolor;
+    float: center;
+    clear: both;
+}
+
+/* Estilo para un estilo mayor a 1366px, no he usado variables ni mixins porque no me ha parecido conveniente */
+@media (min-width: 1366px) {
+    nav {
+        width: 12%;
+        float: left;
+    }
+    section {
+        float: left;
+        width: 85%;
+    }
+    article {
+        float: left;
+        width: 27%;
+    }
+}
+/* Estilo para un ancho entre 1366 y 936px, en este caso no he usado variables porque no he visto la necesidad */
+@media (max-width: 1366px) and (min-width: 936px) {
+    nav {
+        width: 20%;
+        float: left;
+    }
+    section {
+        float: left;
+        max-width: 80%;
+    }
+    article {
+        float: left;
+        width: 40%;
+    }
+}
+/* Estilo para un ancho entre 936 y 600px, en este caso no he usado variables porque no he visto la necesisdad */
+@media (max-width: 936px) and (min-width: 600px) {
+    nav {
+        width: 30%;
+        float: left;
+    }
+    section {
+        float: left;
+        width: 70%;
+    }
+    article {
+        float: left;
+        width: 80%;
+    }
+    
+}
+/* Estilo para un ancho entre 600 y 480px */
+@media (max-width: 600px) and (min-width: 480px) {
+    nav {
+        background-color: @navcolor;
+        margin: @marginbase;
+    }
+    ul {
+        display: none;
+    }
+    select {
+        display: inline;
+        background-color: @selectcolor;
+    }
+    section {
+        float: left;
+    }
+    article {
+        float: left;
+    }
+}
+/* Estilo para un ancho menor a 480px */
+@media (max-width: 480px) {
+    nav {
+        background-color: @navcolor;
+        margin: @marginbase;
+    }
+    select {
+        display: inline;
+        background-color: @selectcolor;
+    }
+    ul {
+        display: none;
+    }
+    h2 {
+        display: none;
+    }
+}

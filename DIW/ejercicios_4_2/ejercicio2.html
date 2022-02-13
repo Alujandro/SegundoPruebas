@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Tabla insertar</title>
+    <style>
+        body {
+            counter-reset: contaletra contador; /* Los contadores van separados por espacios, no comas */
+        }
+        #tabla tr:first-of-type {
+            background-color: aqua;
+        }
+        #tabla tr:first-of-type th:not(:first-child)::before {
+            counter-increment: contaletra;
+            content: counter(contaletra, upper-alpha);
+        }
+        #tabla tr td:first-child::before {
+            counter-increment: contador;
+            content: counter(contador);
+        }
+
+        #tabla tr:not(:first-of-type):hover {
+            background-color: rgb(193, 255, 255);
+        }
+        td, th {
+            height: 20px;
+            width: 20px;
+        }
+        table, tr, td, th{
+            border: 1px solid black;
+            margin: 0px;
+        }
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+
+</head>
+<body>
+    <table id="tabla">
+        <tr><th></th><th></th><th></th><th></th><th></th></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+</body>
+</html>

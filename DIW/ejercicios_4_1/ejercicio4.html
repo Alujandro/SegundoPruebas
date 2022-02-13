@@ -15,9 +15,41 @@ body {
 }
 
 .wrapper {
+  width: 950px;
+  height: 630px;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "a a . . e e"
+  "a a b b e e"
+  "c c . . e e"
+  ". . d d e e";
+  grid-gap: 1em;
+  justify-items: auto;
   background: no-repeat url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/12005/grid.png);
   background-color: #fff;
   color: #444;
+}
+
+[class='box a'] {
+  border: 1px solid black;
+  grid-area: a;
+}
+[class='box b'] {
+  border: 1px solid black;
+  grid-area: b;
+}
+[class='box c'] {
+  border: 1px solid black;
+  grid-area: c;
+}
+[class='box d'] {
+  border: 1px solid black;
+  grid-area: d;
+}
+[class='box e'] {
+  border: 1px solid black;
+  grid-area: e;
 }
 
 </style>
