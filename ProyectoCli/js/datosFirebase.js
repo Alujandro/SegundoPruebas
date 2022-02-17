@@ -1,7 +1,7 @@
 "use strict";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -12,7 +12,7 @@ const firebaseConfig = {
   projectId: "libros-8e910",
   storageBucket: "libros-8e910.appspot.com",
   messagingSenderId: "95775774676",
-  appId: "1:95775774676:web:6e56647e49b4613d01e841"
+  appId: "1:95775774676:web:6e56647e49b4613d01e841",
 };
 
 // Initialize Firebase

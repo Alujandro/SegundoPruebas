@@ -8,6 +8,7 @@ import {
   collection,
   getDocs,
   getDoc,
+  setDoc,
   onSnapshot,
   doc,
   deleteDoc,
@@ -17,50 +18,60 @@ import {
   where,
   orderBy,
   limit,
-} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  arrayUnion,
+  arrayRemove
+} from "https://www.gstatic.com/firebasejs/9.6.6/firebase-firestore.js";
 import {
   getAuth,
+  signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js";
 
 
 window.onload = () => {
-
+  /**
+   * 
+   * Variables globales
+   * 
+   */
   const db = getFirestore(app);
   const librosColeccion = collection(db, "libros");
   const usuariosColeccion = collection(db, "usuarios");
+  var usuarioActivo = "";
 
   /* 
+  *
   * Manejo de login y usuarios
+  * 
   */
+
   //Crear usuario
   const creaUser=(email, password, nombre) => {
     createUserWithEmailAndPassword(autentico, email, password)
     .then((dataUser) => {
       // Signed in
-      const user = dataUser.user;
       //Cambia el displayName
-      return dataUser.user.updateProfile({
-        displayName: nombre
-      });
+      anadeUser(dataUser.user.uid,nombre);
+      console.log(dataUser.user.uid);
       // ...
     })
     .catch((error) => {
-      console.log(error);
+      //console.log(error);
+      console.log(error.message);
       const errorCode = error.code;
       const errorMessage = error.message;
       // ..
     });
   }
+
   //Login de usuario
   const logIn=(email, password) => {
     signInWithEmailAndPassword(autentico, email, password)
     .then((dataUser) => {
       // Signed in
-      console.log(dataUser.user);
-      console.log(dataUser.user);
+      console.log(dataUser.user.email);
       // ...
     })
     .catch((error) => {
@@ -69,16 +80,20 @@ window.onload = () => {
       const errorMessage = error.message;
     });
   }
+
+  //Cambio de estado en la sesión de usuario
   onAuthStateChanged(autentico, (usuario) => {
     if (usuario) {
-      console.log(usuario.uid);
+      usuarioActivo=usuario.uid;
       //A partir de aquí introducir el código que muestra la pantalla iniciada
-      console.log(usuario.email);
-      filtrarListas("propietario","==","Carlos");
+      formLibro();
+      cabecera();
+      //filtrarListas("propietario","==","Carlos");
     } else {
       console.log("No se ha iniciado sesión");
     }
   });
+
   //Logout de usuario
   const logOut=() =>{
     signOut(autentico).then(() => {
@@ -88,14 +103,194 @@ window.onload = () => {
     });
   }
 
+  /**
+   * 
+   * Modificar colecciones de datos, añadir, eliminar y actualizar elementos o datos de las colecciones
+   * 
+   */
+
+  //Añade libros a la colección, recibe nombre, propietario(por nombre) y número de páginas.
+  const anadeLibro= async (nom, prop, pag) =>{
+    const datoLibro={
+      estado: "pendiente",
+      nombre: nom,
+      paginas: pag,
+      propietario: prop
+    }
+    const archivo=await addDoc(librosColeccion,datoLibro);
+    anadeLibroUser(archivo.id);
+    document.getElementById("cont3").innerHTML="Libro añadido satisfactoriamente";  //Salida de texto
+  }
+
+  //Borra un libro
+  const borraLibro= async (id) =>{
+    const archivo=await deleteDoc(librosColeccion,id);
+    document.getElementById("cont3").innerHTML="Libro eliminado satisfactoriamente";  //Salida de texto
+  }
+
+  //Recibe estado e id y le cambia el estado al libro
+  const updateLibro= async (id,estado) =>{
+    const estadoLibro={
+      estado: estado
+    }
+    const archivo=await updateDoc(doc(db,"libros",id),estadoLibro);
+  }
+
+  //Añade usuarios a la colección de usuarios recibe el user.displayName y el user.id, creará al usuario usando el mismo id que la cuenta de autenticación
+  const anadeUser= async (id, nom) =>{
+    const datoUser={
+      libros: [],
+      nombre: nom
+    }
+    const archivo=await setDoc(doc(db, "usuarios", id), datoUser);
+    document.getElementById("cont3").innerHTML="Usuario añadido satisfactoriamente";  //Salida de texto
+  }
+
+  //Añade un libro a la lista de libros (guarda el id)
+  const anadeLibroUser= async (id) =>{
+    const datoUser=await updateDoc(doc(db,"usuarios",usuarioActivo),{
+      libros: arrayUnion(id)
+
+    });
+  }
+
+  //Elimina un libro de la lista de libros, recibimos el ID del libro que vamos a borrar
+  const borraLibroUser= async (id) =>{
+    const datoUser=await updateDoc(doc(db,"usuarios",usuarioActivo),{
+      libros: arrayRemove(id)
+    });
+  }
+
+  /**
+   * 
+   * Obtención de colección de colección de datos
+   * 
+   */
+  //Obtención por tipo
+   const filtrarLibrosEstado = async (estado) => {
+    const consulta = query(
+      productosColeccion,
+      where("estado", "==", valor)  //Consulta que te da todos los libros con el estado que se le pasa
+    );
+    const productosFiltrados = await getDocs(consulta);
+  };
+  //Obtiene un único libro por ID
+  const getLibroID = async (id) => {
+    const libro=await getDoc(doc(db,"libros",id));
+    return libro;
+  }
+  
+  /**
+   * 
+   * Formularios
+   * 
+   */
+
+  //Formulario para la creación de usuario
+  const formUser=() =>{
+    let login=document.getElementById("cont1");
+    let cruse=document.getElementById("cont2");
+    login.style.display="none";
+    cruse.appendChild(plantillas.pintaForm());
+    listenersCrear();
+  }
+
+  //Formulario par añadir un libro
+  const formLibro=() =>{
+    let login=document.getElementById("cont1");
+    let pagi=document.getElementById("cont2");
+    login.style.display="none";
+    let dib=plantillas.formLibro();
+    pagi.appendChild(dib);
+    listenersLibro();
+  }
+
+  /**
+   * 
+   * Información de la cabecera
+   * 
+   */
+  const cabecera=() =>{
+    let cabeza=document.getElementById("cabecera");
+    cabeza.appendChild(plantillas.textoCabesa());
+    listenersCabeza();
+  }
+
+  /*
+  *
+  * Los listeners van a partir de aquí
+  * 
+  */
+
+ //Listener de los botones de login
   const listenersInicio=() =>{
     let comprobar=document.getElementById("comprobar");
     let crear=document.getElementById("crear");
     comprobar.addEventListener("click",(e)=>{
-      logIn(); //Mejorar
+      let usu=document.getElementById("usuario").value;
+      let contras=document.getElementById("contras").value;
+      logIn(usu,contras); //Mejorar
     });
     crear.addEventListener("click",(e)=>{
-      creaUser(); //Mejorar
+      formUser();
     });
   }
+
+  //Listener de la cabecera
+  const listenersCabeza=()=>{
+    let volver=document.getElementById("salir");
+    volver.addEventListener("click", (e)=>{
+      logOut();
+      window.location.reload(true);
+    })
+  }
+  //Listener de los botones de crear usuarios
+  const listenersCrear=() =>{
+    let crear=document.getElementById("guardausu");
+    let volver=document.getElementById("volver");
+    //Hace toda la comprobación de usuario
+    crear.addEventListener("click", (e) => {
+      const patron=/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+      let nom=document.getElementById("cnombre").value;
+      let mnom=document.getElementById("mnombre").value;
+      let pas1=document.getElementById("ccontras1").value;
+      let pas2=document.getElementById("ccontras2").value;
+      if (patron.test(nom)){
+        if (pas1==pas2 && pas1!=""){
+          console.log("Creando usuario...");
+          creaUser(nom,pas1,mnom);
+          nom="";
+          mnom="";
+          pas1="";
+          pas2="";
+        } else {
+          console.log("La contraseña no es válida o no coinciden");
+          alert("La contraseña no es válida o no coinciden");
+        }
+      } else {
+        console.log("Introduce un correo válido");
+        alert("Introduce un correo válido");
+      }
+    });
+    //Recarga la página, devolviendo todo a su estado original.
+    volver.addEventListener("click", (e) => {
+      window.location.reload(true);
+    });
+  }
+  const listenersLibro=() =>{
+    let crear=document.getElementById("newlibro");
+    //Hace toda la comprobación de usuario
+    crear.addEventListener("click", (e) => {
+      let titulo=document.getElementById("lnombre").value;
+      let propietario=document.getElementById("pronombre").value;
+      let pags=document.getElementById("paginas").value;
+          console.log("Añadiendo libro...");
+          anadeLibro(titulo,propietario,pags);
+          titulo="";
+          propietario="";
+          pags="";
+      
+    });
+  }
+  listenersInicio();
 }; // Fin window.load

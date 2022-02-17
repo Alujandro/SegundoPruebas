@@ -331,7 +331,7 @@ const editDocPrecPro= async(dato, id) => {
     });
   };
 
-  const filtrarNombre = async (nombre) => {
+  const filtrarLibros = async (nombre) => {
     const consulta = query(
       productosColeccion,
       where("nombre","==", nombre)
