@@ -1,7 +1,32 @@
 "use strict";
 
-export const pintarFila= (documento,id) => {
-  
+export const pintarLibro= (documento) => {
+  let div=document.createElement("div");
+  div.id=documento.id;
+  div.className=documento.data().estado;
+  if (div.className=="pendiente"){
+    div.innerHTML+=`
+    <p>Libro: ${documento.data().nombre}</p>
+    <p>Propietario: ${documento.data().propietario}</p>
+    <p>Páginas: ${documento.data().paginas}</p>
+    `;
+    
+  }
+  if (div.className=="leyendo"){
+    div.innerHTML+=`
+    <p>Libro: ${documento.data().nombre}</p>
+    <p>Propietario: ${documento.data().propietario}</p>
+    <p>Páginas: ${documento.data().paginas}</p>
+    `;
+  }
+  if (div.className=="leido"){
+    div.innerHTML+=`
+    <p>Libro: ${documento.data().nombre}</p>
+    <p>Propietario: ${documento.data().propietario}</p>
+    <p>Páginas: ${documento.data().paginas}</p>
+    `;
+  }
+  return div;
 }
 
 //Formulario para la creación de la cuenta
@@ -34,9 +59,7 @@ export const pintaForm= () => {
 //Formulario para crear un libro
 export const formLibro= () => {
     let div=document.createElement("div");
-    let titulo=document.createElement("h3");
-    titulo.innerHTML="Añadir libro";
-    div.appendChild(titulo);
+    document.getElementById("cont2").innerHTML="<h3 id='adicion'>Añadir libro <button id='mostrocul'>Mostrar</button></h3>";
     let formu=document.createElement("form");
     formu.innerHTML=`
     <label for="lnombre">Título: </label><br>
@@ -52,6 +75,7 @@ export const formLibro= () => {
     boton.id="newlibro";
     boton.innerHTML="Añadir";
     div.appendChild(boton);
+    div.style.display="none";
     return div;
 }
 
@@ -59,7 +83,7 @@ export const formLibro= () => {
 export const textoCabesa= (usu) => {
     let div=document.createElement("div");
     let titulo=document.createElement("h3");
-    titulo.innerHTML="Libros de ";
+    titulo.innerHTML="Libros de "+usu;
     div.appendChild(titulo);
     let boton=document.createElement("button");
     boton.innerHTML="Cerrar sesión";

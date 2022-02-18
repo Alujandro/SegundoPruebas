@@ -40,6 +40,7 @@ window.onload = () => {
   const librosColeccion = collection(db, "libros");
   const usuariosColeccion = collection(db, "usuarios");
   var usuarioActivo = "";
+  var nomUsu="";
 
   /* 
   *
@@ -87,8 +88,8 @@ window.onload = () => {
       usuarioActivo=usuario.uid;
       //A partir de aquí introducir el código que muestra la pantalla iniciada
       formLibro();
-      cabecera();
-      //filtrarListas("propietario","==","Carlos");
+      muestraList();
+      getLista();
     } else {
       console.log("No se ha iniciado sesión");
     }
@@ -120,12 +121,14 @@ window.onload = () => {
     const archivo=await addDoc(librosColeccion,datoLibro);
     anadeLibroUser(archivo.id);
     document.getElementById("cont3").innerHTML="Libro añadido satisfactoriamente";  //Salida de texto
+    getLista();
   }
 
   //Borra un libro
   const borraLibro= async (id) =>{
-    const archivo=await deleteDoc(librosColeccion,id);
-    document.getElementById("cont3").innerHTML="Libro eliminado satisfactoriamente";  //Salida de texto
+    const archivo=await deleteDoc(doc(db,"libros",id));
+    borraLibroUser(id);
+    console.log("Libro eliminado satisfactoriamente");  //Salida de texto
   }
 
   //Recibe estado e id y le cambia el estado al libro
@@ -134,6 +137,7 @@ window.onload = () => {
       estado: estado
     }
     const archivo=await updateDoc(doc(db,"libros",id),estadoLibro);
+    getLista();
   }
 
   //Añade usuarios a la colección de usuarios recibe el user.displayName y el user.id, creará al usuario usando el mismo id que la cuenta de autenticación
@@ -150,7 +154,6 @@ window.onload = () => {
   const anadeLibroUser= async (id) =>{
     const datoUser=await updateDoc(doc(db,"usuarios",usuarioActivo),{
       libros: arrayUnion(id)
-
     });
   }
 
@@ -159,6 +162,7 @@ window.onload = () => {
     const datoUser=await updateDoc(doc(db,"usuarios",usuarioActivo),{
       libros: arrayRemove(id)
     });
+    getLista();
   }
 
   /**
@@ -173,11 +177,87 @@ window.onload = () => {
       where("estado", "==", valor)  //Consulta que te da todos los libros con el estado que se le pasa
     );
     const productosFiltrados = await getDocs(consulta);
-  };
-  //Obtiene un único libro por ID
+  }
+
+  //Obtiene un único libro por ID y lo muestra donde toca y añade los listeners necesarios
   const getLibroID = async (id) => {
     const libro=await getDoc(doc(db,"libros",id));
-    return libro;
+    let plant=plantillas.pintarLibro(libro);
+    let boton=document.createElement("button");
+    boton.className="borrar";
+    boton.innerHTML="Eliminar";
+    boton.addEventListener("click", (e) => {
+      borraLibro(e.target.parentElement.id);
+    });
+
+    if (libro.data().estado=="pendiente"){
+      let pendiente=document.getElementById("pendientes");
+
+      let botLee=document.createElement("button");
+      botLee.className="lectura";
+      botLee.innerHTML="Leer";
+
+      botLee.addEventListener("click", (e) => {
+        updateLibro(e.target.parentElement.id,"leyendo");
+      });
+
+      plant.appendChild(botLee);
+      plant.appendChild(boton);
+
+      pendiente.appendChild(plant);
+    }
+    if (libro.data().estado=="leyendo"){
+      let leyendo=document.getElementById("leyendos");
+
+      let botTerm=document.createElement("button");
+      botTerm.className="terminar";
+      botTerm.innerHTML="Terminar";
+
+      botTerm.addEventListener("click", (e) => {
+        updateLibro(e.target.parentElement.id,"leido");
+      });
+
+      plant.appendChild(botTerm);
+      plant.appendChild(boton);
+
+      leyendo.appendChild(plant);
+    }
+    if (libro.data().estado=="leido"){
+      let leido=document.getElementById("leidos");
+
+      plant.appendChild(boton);
+      leido.appendChild(plant);
+    }
+  }
+
+  //Obtiene la lista de libros del usuario activo
+  const getLista = async () => {
+    const us=await getDoc(doc(db,"usuarios",usuarioActivo));
+    let salida=document.getElementById("cont3");
+    salida.innerHTML="";
+
+    let pendiente=document.createElement("div");
+    pendiente.id="pendientes";
+    pendiente.innerHTML="<h3>Pendientes</h3>";
+
+    let leyendo=document.createElement("div");
+    leyendo.id="leyendos";
+    leyendo.innerHTML="<h3>Leyendo</h3>";
+
+    let leido=document.createElement("div");
+    leido.id="leidos";
+    leido.innerHTML="<h3>Leídos</h3>";
+
+    salida.appendChild(pendiente);
+    salida.appendChild(leyendo);
+    salida.appendChild(leido);
+
+    let listaLib=us.data().libros;
+    nomUsu=us.data().nombre;
+    cabecera();
+    for (let i=0; i<listaLib.length; i++){
+      getLibroID(listaLib[i]);
+    }
   }
   
   /**
@@ -212,7 +292,8 @@ window.onload = () => {
    */
   const cabecera=() =>{
     let cabeza=document.getElementById("cabecera");
-    cabeza.appendChild(plantillas.textoCabesa());
+    cabeza.innerHTML="";
+    cabeza.appendChild(plantillas.textoCabesa(nomUsu));
     listenersCabeza();
   }
 
@@ -277,9 +358,10 @@ window.onload = () => {
       window.location.reload(true);
     });
   }
+
+  //Listeners para el formulario de crear libro
   const listenersLibro=() =>{
     let crear=document.getElementById("newlibro");
-    //Hace toda la comprobación de usuario
     crear.addEventListener("click", (e) => {
       let titulo=document.getElementById("lnombre").value;
       let propietario=document.getElementById("pronombre").value;
@@ -290,6 +372,20 @@ window.onload = () => {
           propietario="";
           pags="";
       
+    });
+  }
+
+  //Listener para ocultar y mostrar y ocultar el formulario de añadir libro
+  const muestraList=() =>{
+    let muestrao=document.getElementById("mostrocul");
+    muestrao.addEventListener("click", (e) => {
+      if (muestrao.innerHTML=="Mostrar"){
+        muestrao.innerHTML="Ocultar";
+        document.getElementById("nuevolibro").style.display="initial";
+      } else {
+        document.getElementById("nuevolibro").style.display="none";
+        muestrao.innerHTML="Mostrar";
+      }
     });
   }
   listenersInicio();
