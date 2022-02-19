@@ -6,7 +6,7 @@ export const pintarLibro= (documento) => {
   div.className=documento.data().estado;
   if (div.className=="pendiente"){
     div.innerHTML+=`
-    <p>Libro: ${documento.data().nombre}</p>
+    <p>Título: ${documento.data().nombre}</p>
     <p>Propietario: ${documento.data().propietario}</p>
     <p>Páginas: ${documento.data().paginas}</p>
     `;
@@ -32,6 +32,9 @@ export const pintarLibro= (documento) => {
 //Formulario para la creación de la cuenta
 export const pintaForm= () => {
     let div=document.createElement("div");
+    let titulo=document.createElement("h3");
+    titulo.innerHTML="Crear Usuario";
+    div.appendChild(titulo);
     let formu=document.createElement("form");
     formu.innerHTML=`
     <label for="cnombre">Correo:</label><br>
@@ -63,11 +66,11 @@ export const formLibro= () => {
     let formu=document.createElement("form");
     formu.innerHTML=`
     <label for="lnombre">Título: </label><br>
-    <input type="text" id="lnombre" name="lnombre" placeholder="titulo"><br>
+    <input type="text" id="lnombre" name="lnombre" placeholder="titulo"><br><br>
     <label for="pronombre">Propietario: </label><br>
-    <input type="text" id="pronombre" name="pronombre" placeholder="Biblioteca"><br>
+    <input type="text" id="pronombre" name="pronombre" placeholder="Biblioteca"><br><br>
     <label for="paginas">Páginas:</label><br>
-    <input type="number" id="paginas" name="paginas"><br><br>
+    <input type="number" id="paginas" name="paginas"><br>
     `;
     div.appendChild(formu);
     div.id="nuevolibro";

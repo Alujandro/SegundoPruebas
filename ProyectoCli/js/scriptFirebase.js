@@ -33,7 +33,7 @@ import {
 window.onload = () => {
   /**
    * 
-   * Variables globales
+   * Variables y constantes globales
    * 
    */
   const db = getFirestore(app);
@@ -167,7 +167,7 @@ window.onload = () => {
 
   /**
    * 
-   * Obtención de colección de colección de datos
+   * Obtención de colección de datos
    * 
    */
   //Obtención por tipo
@@ -299,7 +299,7 @@ window.onload = () => {
 
   /*
   *
-  * Los listeners van a partir de aquí
+  * Listeners
   * 
   */
 
